@@ -1,0 +1,396 @@
+<!--
+# Copyright (c) 2020, NVIDIA CORPORATION. All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+#  * Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#  * Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+#  * Neither the name of NVIDIA CORPORATION nor the names of its
+#    contributors may be used to endorse or promote products derived
+#    from this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS ``AS IS'' AND ANY
+# EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+# PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+# CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+# EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+# PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+# PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
+# OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Overview: module code &mdash; NVFlare 1.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/additions.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+           
+
+          
+            <a href="../index.html" class="icon icon-home"> NVFlare
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+
+  <style>
+    /* Sidebar header (and topbar for mobile) */
+    .wy-side-nav-search, .wy-nav-top {
+      background: #76b900;
+    }
+
+    .wy-side-nav-search a:link, .wy-nav-top a:link {
+      color: #fff;
+    }
+    .wy-side-nav-search a:visited, .wy-nav-top a:visited {
+      color: #fff;
+    }
+    .wy-side-nav-search a:hover, .wy-nav-top a:hover {
+      color: #fff;
+    }
+
+    .wy-menu-vertical a:link, .wy-menu-vertical a:visited {
+      color: #d9d9d9
+    }
+
+    .wy-menu-vertical a:active {
+      background-color: #76b900
+    }
+
+    .wy-side-nav-search>div.version {
+      color: rgba(0, 0, 0, 0.3)
+    }
+
+    .wy-nav-content {
+      max-width: 80%;
+    }
+
+    .floatleftcol {
+      float: left;
+      max-width: 60%;
+      padding-right: 20px;
+    }
+  </style>
+  
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming_guide.html">Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources.html">Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../apidocs/modules.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">NVFlare</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Overview: module code</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>All modules for which code is available</h1>
+<ul><li><a href="nvflare/apis/aggregator.html">nvflare.apis.aggregator</a></li>
+<li><a href="nvflare/apis/event_type.html">nvflare.apis.event_type</a></li>
+<li><a href="nvflare/apis/filter.html">nvflare.apis.filter</a></li>
+<li><a href="nvflare/apis/fl_component.html">nvflare.apis.fl_component</a></li>
+<li><a href="nvflare/apis/fl_constant.html">nvflare.apis.fl_constant</a></li>
+<li><a href="nvflare/apis/fl_context.html">nvflare.apis.fl_context</a></li>
+<li><a href="nvflare/apis/learnable.html">nvflare.apis.learnable</a></li>
+<li><a href="nvflare/apis/model_persistor.html">nvflare.apis.model_persistor</a></li>
+<li><a href="nvflare/apis/model_processor.html">nvflare.apis.model_processor</a></li>
+<li><a href="nvflare/apis/shareable.html">nvflare.apis.shareable</a></li>
+<li><a href="nvflare/apis/shareable_generator.html">nvflare.apis.shareable_generator</a></li>
+<li><a href="nvflare/apis/train_config_validator.html">nvflare.apis.train_config_validator</a></li>
+<li><a href="nvflare/apis/trainer.html">nvflare.apis.trainer</a></li>
+<li><a href="nvflare/apis/validator.html">nvflare.apis.validator</a></li>
+<li><a href="nvflare/common/signal.html">nvflare.common.signal</a></li>
+<li><a href="nvflare/components/aggregators/accumulate_model_aggregator.html">nvflare.components.aggregators.accumulate_model_aggregator</a></li>
+<li><a href="nvflare/components/aggregators/intime_accumulate_model_aggregator.html">nvflare.components.aggregators.intime_accumulate_model_aggregator</a></li>
+<li><a href="nvflare/components/filters/exclude_vars.html">nvflare.components.filters.exclude_vars</a></li>
+<li><a href="nvflare/components/filters/percentile_privacy.html">nvflare.components.filters.percentile_privacy</a></li>
+<li><a href="nvflare/components/filters/svt_privacy.html">nvflare.components.filters.svt_privacy</a></li>
+<li><a href="nvflare/components/handlers/fl_context_info_handler.html">nvflare.components.handlers.fl_context_info_handler</a></li>
+<li><a href="nvflare/components/handlers/intime_model_selection_handler.html">nvflare.components.handlers.intime_model_selection_handler</a></li>
+<li><a href="nvflare/components/shareablegenerators/full_model_shareable_generator.html">nvflare.components.shareablegenerators.full_model_shareable_generator</a></li>
+<li><a href="nvflare/experimental/homomorphic_encryption/he_constant.html">nvflare.experimental.homomorphic_encryption.he_constant</a></li>
+<li><a href="nvflare/experimental/homomorphic_encryption/he_intime_accumulate_model_aggregator.html">nvflare.experimental.homomorphic_encryption.he_intime_accumulate_model_aggregator</a></li>
+<li><a href="nvflare/experimental/homomorphic_encryption/he_model_decryptor.html">nvflare.experimental.homomorphic_encryption.he_model_decryptor</a></li>
+<li><a href="nvflare/experimental/homomorphic_encryption/he_model_encryptor.html">nvflare.experimental.homomorphic_encryption.he_model_encryptor</a></li>
+<li><a href="nvflare/experimental/homomorphic_encryption/he_model_shareable_generator.html">nvflare.experimental.homomorphic_encryption.he_model_shareable_generator</a></li>
+<li><a href="nvflare/experimental/homomorphic_encryption/he_pt_file_model_persistor.html">nvflare.experimental.homomorphic_encryption.he_pt_file_model_persistor</a></li>
+<li><a href="nvflare/experimental/homomorphic_encryption/he_pt_model_reader_writer.html">nvflare.experimental.homomorphic_encryption.he_pt_model_reader_writer</a></li>
+<li><a href="nvflare/experimental/homomorphic_encryption/homomorphic_encrypt.html">nvflare.experimental.homomorphic_encryption.homomorphic_encrypt</a></li>
+<li><a href="nvflare/fuel/common/ctx.html">nvflare.fuel.common.ctx</a></li>
+<li><a href="nvflare/fuel/common/debug.html">nvflare.fuel.common.debug</a></li>
+<li><a href="nvflare/fuel/common/excepts.html">nvflare.fuel.common.excepts</a></li>
+<li><a href="nvflare/fuel/hci/base64_utils.html">nvflare.fuel.hci.base64_utils</a></li>
+<li><a href="nvflare/fuel/hci/client/api.html">nvflare.fuel.hci.client.api</a></li>
+<li><a href="nvflare/fuel/hci/client/api_status.html">nvflare.fuel.hci.client.api_status</a></li>
+<li><a href="nvflare/fuel/hci/client/file_transfer.html">nvflare.fuel.hci.client.file_transfer</a></li>
+<li><a href="nvflare/fuel/hci/client/lib.html">nvflare.fuel.hci.client.lib</a></li>
+<li><a href="nvflare/fuel/hci/client/test_api_example.html">nvflare.fuel.hci.client.test_api_example</a></li>
+<li><a href="nvflare/fuel/hci/cmd_arg_utils.html">nvflare.fuel.hci.cmd_arg_utils</a></li>
+<li><a href="nvflare/fuel/hci/conn.html">nvflare.fuel.hci.conn</a></li>
+<li><a href="nvflare/fuel/hci/fl_api.html">nvflare.fuel.hci.fl_api</a></li>
+<li><a href="nvflare/fuel/hci/proto.html">nvflare.fuel.hci.proto</a></li>
+<li><a href="nvflare/fuel/hci/reg.html">nvflare.fuel.hci.reg</a></li>
+<li><a href="nvflare/fuel/hci/security.html">nvflare.fuel.hci.security</a></li>
+<li><a href="nvflare/fuel/hci/server/audit.html">nvflare.fuel.hci.server.audit</a></li>
+<li><a href="nvflare/fuel/hci/server/authz.html">nvflare.fuel.hci.server.authz</a></li>
+<li><a href="nvflare/fuel/hci/server/builtin.html">nvflare.fuel.hci.server.builtin</a></li>
+<li><a href="nvflare/fuel/hci/server/constants.html">nvflare.fuel.hci.server.constants</a></li>
+<li><a href="nvflare/fuel/hci/server/file_transfer.html">nvflare.fuel.hci.server.file_transfer</a></li>
+<li><a href="nvflare/fuel/hci/server/hci.html">nvflare.fuel.hci.server.hci</a></li>
+<li><a href="nvflare/fuel/hci/server/login.html">nvflare.fuel.hci.server.login</a></li>
+<li><a href="nvflare/fuel/hci/server/reg.html">nvflare.fuel.hci.server.reg</a></li>
+<li><a href="nvflare/fuel/hci/server/sess.html">nvflare.fuel.hci.server.sess</a></li>
+<li><a href="nvflare/fuel/hci/server/shell.html">nvflare.fuel.hci.server.shell</a></li>
+<li><a href="nvflare/fuel/hci/shell_cmd_val.html">nvflare.fuel.hci.shell_cmd_val</a></li>
+<li><a href="nvflare/fuel/hci/table.html">nvflare.fuel.hci.table</a></li>
+<li><a href="nvflare/fuel/hci/tools/admin.html">nvflare.fuel.hci.tools.admin</a></li>
+<li><a href="nvflare/fuel/hci/tools/authz_preview.html">nvflare.fuel.hci.tools.authz_preview</a></li>
+<li><a href="nvflare/fuel/hci/tools/make_pwd.html">nvflare.fuel.hci.tools.make_pwd</a></li>
+<li><a href="nvflare/fuel/hci/zip_utils.html">nvflare.fuel.hci.zip_utils</a></li>
+<li><a href="nvflare/fuel/scheduler/scheduler.html">nvflare.fuel.scheduler.scheduler</a></li>
+<li><a href="nvflare/fuel/sec/audit.html">nvflare.fuel.sec.audit</a></li>
+<li><a href="nvflare/fuel/sec/authz.html">nvflare.fuel.sec.authz</a></li>
+<li><a href="nvflare/fuel/sec/security_content_service.html">nvflare.fuel.sec.security_content_service</a></li>
+<li><a href="nvflare/fuel/utils/argument_utils.html">nvflare.fuel.utils.argument_utils</a></li>
+<li><a href="nvflare/fuel/utils/clara_conf.html">nvflare.fuel.utils.clara_conf</a></li>
+<li><a href="nvflare/fuel/utils/class_utils.html">nvflare.fuel.utils.class_utils</a></li>
+<li><a href="nvflare/fuel/utils/comm.html">nvflare.fuel.utils.comm</a></li>
+<li><a href="nvflare/fuel/utils/dict_utils.html">nvflare.fuel.utils.dict_utils</a></li>
+<li><a href="nvflare/fuel/utils/json_scanner.html">nvflare.fuel.utils.json_scanner</a></li>
+<li><a href="nvflare/fuel/utils/pipe/file_pipe.html">nvflare.fuel.utils.pipe.file_pipe</a></li>
+<li><a href="nvflare/fuel/utils/pipe/pipe.html">nvflare.fuel.utils.pipe.pipe</a></li>
+<li><a href="nvflare/fuel/utils/time_utils.html">nvflare.fuel.utils.time_utils</a></li>
+<li><a href="nvflare/fuel/utils/vars_processor.html">nvflare.fuel.utils.vars_processor</a></li>
+<li><a href="nvflare/fuel/utils/wfconf.html">nvflare.fuel.utils.wfconf</a></li>
+<li><a href="nvflare/lighter/notary.html">nvflare.lighter.notary</a></li>
+<li><a href="nvflare/lighter/participant/admin.html">nvflare.lighter.participant.admin</a></li>
+<li><a href="nvflare/lighter/participant/client.html">nvflare.lighter.participant.client</a></li>
+<li><a href="nvflare/lighter/participant/participant.html">nvflare.lighter.participant.participant</a></li>
+<li><a href="nvflare/lighter/participant/server.html">nvflare.lighter.participant.server</a></li>
+<li><a href="nvflare/lighter/poc.html">nvflare.lighter.poc</a></li>
+<li><a href="nvflare/lighter/provision.html">nvflare.lighter.provision</a></li>
+<li><a href="nvflare/lighter/study.html">nvflare.lighter.study</a></li>
+<li><a href="nvflare/lighter/utils.html">nvflare.lighter.utils</a></li>
+<li><a href="nvflare/pt/pt_fed_utils.html">nvflare.pt.pt_fed_utils</a></li>
+<li><a href="nvflare/pt/pt_model_reader_writer.html">nvflare.pt.pt_model_reader_writer</a></li>
+<li><a href="nvflare/security/authz.html">nvflare.security.authz</a></li>
+<li><a href="nvflare/utils/admin_defs.html">nvflare.utils.admin_defs</a></li>
+<li><a href="nvflare/utils/client_utils.html">nvflare.utils.client_utils</a></li>
+<li><a href="nvflare/utils/fed_utils.html">nvflare.utils.fed_utils</a></li>
+<li><a href="nvflare/utils/fl_ctx_sanity_check.html">nvflare.utils.fl_ctx_sanity_check</a></li>
+<li><a href="nvflare/utils/fl_exception.html">nvflare.utils.fl_exception</a></li>
+<li><a href="nvflare/utils/ml_model_registry.html">nvflare.utils.ml_model_registry</a></li>
+</ul>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, NVIDIA.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    
+
+  <style>
+  a:link, a:visited {
+    color: #76b900;
+  }
+
+  a:hover {
+    color: #8c0;
+  }
+
+  p {
+    margin-bottom: 1em;
+  }
+
+  .rst-content dl dt {
+    font-weight: unset;
+    margin-bottom: 0;
+  }
+
+  .rst-content .section ul p {
+    margin-bottom: 0px;
+  }
+  </style>
+  
+
+</body>
+</html>

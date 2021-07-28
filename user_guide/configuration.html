@@ -1,0 +1,460 @@
+<!--
+# Copyright (c) 2020, NVIDIA CORPORATION. All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+#  * Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#  * Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+#  * Neither the name of NVIDIA CORPORATION nor the names of its
+#    contributors may be used to endorse or promote products derived
+#    from this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS ``AS IS'' AND ANY
+# EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+# PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+# CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+# EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+# PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+# PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
+# OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Configuration details &mdash; NVFlare 1.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/additions.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Authorization" href="authorization.html" />
+    <link rel="prev" title="Provisioning tool" href="provisioning_tool.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+           
+
+          
+            <a href="../index.html" class="icon icon-home"> NVFlare
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+
+  <style>
+    /* Sidebar header (and topbar for mobile) */
+    .wy-side-nav-search, .wy-nav-top {
+      background: #76b900;
+    }
+
+    .wy-side-nav-search a:link, .wy-nav-top a:link {
+      color: #fff;
+    }
+    .wy-side-nav-search a:visited, .wy-nav-top a:visited {
+      color: #fff;
+    }
+    .wy-side-nav-search a:hover, .wy-nav-top a:hover {
+      color: #fff;
+    }
+
+    .wy-menu-vertical a:link, .wy-menu-vertical a:visited {
+      color: #d9d9d9
+    }
+
+    .wy-menu-vertical a:active {
+      background-color: #76b900
+    }
+
+    .wy-side-nav-search>div.version {
+      color: rgba(0, 0, 0, 0.3)
+    }
+
+    .wy-nav-content {
+      max-width: 80%;
+    }
+
+    .floatleftcol {
+      float: left;
+      max-width: 60%;
+      padding-right: 20px;
+    }
+  </style>
+  
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../user_guide.html">User Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="provisioning_tool.html">Provisioning tool</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Configuration details</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#fl-server-configuration">FL server configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fl-client-configuration">FL client configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fl-network-configuration">FL network configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#instructions-on-how-to-create-the-self-signed-ssl-certificate-authority-and-server-clients-certificates">Instructions on how to create the self-signed SSL Certificate Authority and server-clients certificates</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="authorization.html">Authorization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="admin_commands.html">Administrator commands</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../programming_guide.html">Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Hello World Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../apidocs/modules.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">NVFlare</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../user_guide.html">User Guide</a> &raquo;</li>
+        
+      <li>Configuration details</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="configuration-details">
+<span id="config-details"></span><h1>Configuration details<a class="headerlink" href="#configuration-details" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="fl-server-configuration">
+<h2>FL server configuration<a class="headerlink" href="#fl-server-configuration" title="Permalink to this headline">¶</a></h2>
+<p>FL server configuration file: <code class="docutils literal notranslate"><span class="pre">config_fed_server.json</span></code></p>
+<p>Example:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;format_version&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="nt">&quot;servers&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;min_num_clients&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="nt">&quot;max_num_clients&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+      <span class="nt">&quot;wait_after_min_clients&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+      <span class="nt">&quot;heart_beat_timeout&quot;</span><span class="p">:</span> <span class="mi">600</span><span class="p">,</span>
+      <span class="nt">&quot;start_round&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="nt">&quot;num_rounds&quot;</span><span class="p">:</span> <span class="mi">3</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="nt">&quot;aggregator&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;AccumulateWeightedAggregator&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;args&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;aggregation_weights&quot;</span><span class="p">:</span>
+      <span class="p">{</span>
+        <span class="nt">&quot;site-1&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nt">&quot;site-2&quot;</span><span class="p">:</span> <span class="mi">1</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;outbound_filters&quot;</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="nt">&quot;inbound_filters&quot;</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="nt">&quot;model_persistor&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;PTFileModelPersistor&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;args&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;model&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;net.Net&quot;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;shareable_generator&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;FullModelShareableGenerator&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="fl-client-configuration">
+<h2>FL client configuration<a class="headerlink" href="#fl-client-configuration" title="Permalink to this headline">¶</a></h2>
+<p>FL client configuration file: <code class="docutils literal notranslate"><span class="pre">config_fed_client.json</span></code></p>
+<p>Example:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;format_version&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="nt">&quot;platform&quot;</span><span class="p">:</span> <span class="s2">&quot;PT&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;client&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;outbound_filters&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="nt">&quot;inbound_filters&quot;</span><span class="p">:</span> <span class="p">[]</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;client_trainer&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;trainer.SimpleTrainer&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;args&quot;</span><span class="p">:</span> <span class="p">{}</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;handlers&quot;</span><span class="p">:</span> <span class="p">[]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="fl-network-configuration">
+<h2>FL network configuration<a class="headerlink" href="#fl-network-configuration" title="Permalink to this headline">¶</a></h2>
+<p>In the above example, target is configured as <code class="docutils literal notranslate"><span class="pre">localhost:8002</span></code>.  Based on the network environment in which FL server
+and clients are deployed, users need to ensure DNS is configured correctly so clients can find the server by the server’s name.
+Another way for the name resolution without DNS is to edit the client’s /etc/hosts file.  Before starting clients, add the server
+IP address and its name in /etc/hosts file.  The following is one example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">127.0.0.1   localhost</span>
+<span class="go">::1 localhost ip6-localhost ip6-loopback</span>
+<span class="go">fe00::0     ip6-localnet</span>
+<span class="go">ff00::0     ip6-mcastprefix</span>
+<span class="go">ff02::1     ip6-allnodes</span>
+<span class="go">ff02::2     ip6-allrouters</span>
+<span class="go">172.18.0.2  c96cc6ba74ab</span>
+
+<span class="gp"># </span>Add the following <span class="k">for</span> IP and name of FL server
+<span class="hll"><span class="go">10.110.11.22 fedserver</span>
+</span></pre></div>
+</div>
+<p>When launching the FL server docker with <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span></code>, users also need to expose the port via the <code class="docutils literal notranslate"><span class="pre">-p</span></code> option if not
+using <code class="docutils literal notranslate"><span class="pre">--net=host</span></code>. The highlighted line above may also need to be added to the server’s /etc/hosts file to properly
+resolve the IP that the server is running on.</p>
+</div>
+<div class="section" id="instructions-on-how-to-create-the-self-signed-ssl-certificate-authority-and-server-clients-certificates">
+<h2>Instructions on how to create the self-signed SSL Certificate Authority and server-clients certificates<a class="headerlink" href="#instructions-on-how-to-create-the-self-signed-ssl-certificate-authority-and-server-clients-certificates" title="Permalink to this headline">¶</a></h2>
+<p>If you are using the automatically generated startup kits created by the provisioning tool as described in the
+<a class="reference internal" href="provisioning_tool.html#provisioning-tool"><span class="std std-ref">Provisioning tool</span></a>, the following would have already been taken care of at the
+creation of the startup kits. The code that generates the startup kits automatically creates certificates for the server
+and clients and puts them all in their default expected locations.</p>
+<p>If you are not using the startup kits and want to create certificates yourself manually, the following is an example of
+how that could be done:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>## 1. Server root key and certificate
+
+## 1.1 Server creates the root private key
+`openssl genrsa -out rootCA.key 2048`   Or
+`openssl genrsa -des3 -out rootCA.key 2048` (with password)
+
+## 1.2 Server creates the self-signed root certificate
+`openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 1024 -out rootCA.pem`
+
+## 2. Server private key and CSR
+
+## 2.1 Server creates private key
+`openssl genrsa -out server.key 2048`
+## 2.2 Server creates certificate signing request (CSR)
+`openssl req -new -key server.key -out server.csr`
+## 2.3 Server signs the CSR using the root certificate rootCA.pem
+`openssl x509 -req -in server.csr -CA rootCA.pem -CAkey rootCA.key -CAcreateserial -out server.crt -days 500 -sha256`
+
+## 3. Client certificate
+
+## Important: client must input a common name on command below
+## 3.1 Client creates private key
+`openssl genrsa -out client3.key 2048`
+## 3.2 Client creates CSR
+`openssl req -new -key client3.key -out client3.csr`
+
+## 4. Sign the CSR using the root certificate and place signed certificate in client&#39;s config path
+
+## 4.1 Server runs this after getting client3.csr
+`openssl x509 -req -in client3.csr -CA rootCA.pem -CAkey rootCA.key -CAcreateserial -out client3.crt -days 500 -sha256`
+
+## 4.2 Server gives client client3.crt to place in the client&#39;s config path
+</pre></div>
+</div>
+<p>For development purposes, insecure gRPC communication between the server and clients is supported. This communication
+mode is not recommended to be used in the federated learning production deployment.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Very rarely, FL training clients may not exit gracefully after the training is successfully finished.  You can use CTRL-C to shutdown the FL client, or kill the FL client process. This will not affect any model training results and the trained model checkpoint will be saved correctly.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="authorization.html" class="btn btn-neutral float-right" title="Authorization" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="provisioning_tool.html" class="btn btn-neutral float-left" title="Provisioning tool" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, NVIDIA.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    
+
+  <style>
+  a:link, a:visited {
+    color: #76b900;
+  }
+
+  a:hover {
+    color: #8c0;
+  }
+
+  p {
+    margin-bottom: 1em;
+  }
+
+  .rst-content dl dt {
+    font-weight: unset;
+    margin-bottom: 0;
+  }
+
+  .rst-content .section ul p {
+    margin-bottom: 0px;
+  }
+  </style>
+  
+
+</body>
+</html>
