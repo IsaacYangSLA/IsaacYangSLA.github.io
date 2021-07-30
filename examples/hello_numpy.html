@@ -162,11 +162,8 @@
             
             
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../user_guide.html">User Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../programming_guide.html">Programming Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Hello World Examples</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="hello_installation.html">Quickstart (Installation)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../quickstart.html">Quickstart</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="hello_pt.html">Quickstart (PyTorch)</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Quickstart (Numpy)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#before-you-start">Before You Start</a></li>
@@ -188,7 +185,11 @@
 <li class="toctree-l2"><a class="reference internal" href="hello_tf2.html">Quickstart (TensorFlow 2)</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming_guide.html">Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../apidocs/modules.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix.html">Appendix</a></li>
 </ul>
 
             
@@ -237,7 +238,7 @@
     
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
-          <li><a href="../examples.html">Hello World Examples</a> &raquo;</li>
+          <li><a href="../quickstart.html">Quickstart</a> &raquo;</li>
         
       <li>Quickstart (Numpy)</li>
     
@@ -261,13 +262,14 @@
 <div class="section" id="before-you-start">
 <h2>Before You Start<a class="headerlink" href="#before-you-start" title="Permalink to this headline">¶</a></h2>
 <p>Before jumping into this QuickStart guide, make sure you have an environment with <a class="reference external" href="https://pypi.org/project/nvflare/">NVFlare</a> installed.  You can follow
-<span class="xref std std-doc">installation</span> on the general concept of Python virtual environment (the recommended environment) and how to
-install <code class="docutils literal notranslate"><span class="pre">NVFlare</span></code>.</p>
+<a class="reference internal" href="../installation.html"><span class="doc">installation</span></a> on the general concept of Python virtual environment (the recommended environment) and how to
+install NVFlare.</p>
 </div>
 <div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
 <p>This tutorial is meant to solely demonstrate how the NVFlare system works, without introducing any actual deep learning concepts.
-Through this exercise, you will learn how to use <code class="docutils literal notranslate"><span class="pre">NVFlare</span></code> with numpy to perform basic computations across two clients.</p>
+Through this exercise, you will learn how to use NVFlare with numpy to perform basic computations across two clients.
+Due to the simplified weights, you will be able to clearly see and understand the results of the FL aggregation and the model persistor process.</p>
 <p>The design of this exercise consists of one <strong>server</strong> and two <strong>clients</strong>, starting with weights <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">1]</span></code>.
 The following steps compose one cycle of weight updates, called a <strong>round</strong>:</p>
 <blockquote>
@@ -287,7 +289,7 @@ Every custom FL application must contain three folders:</p>
 </ol>
 </div></blockquote>
 <p>Let’s get started. First clone the repo, if you haven’t already:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ git clone https://gitlab-master.nvidia.com/dlmed/hello_nvflare.git
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/nvidia/nvflare.git
 </pre></div>
 </div>
 <p>Remember to activate your NVFlare Python virtual environment from the installation guide. Ensure numpy is installed.</p>
@@ -337,7 +339,7 @@ a simple addition of two numbers to represent one calculation in the Fibonacci S
 <span class="linenos">32</span>        <span class="n">new_fib</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;sequence&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">terms</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">terms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">terms</span><span class="p">[</span><span class="mi">1</span><span class="p">]])}</span>
 <span class="linenos">33</span>
 <span class="linenos">34</span>        <span class="c1"># add -1 and +1 bias for site-1 and site-2 respectively</span>
-<span class="linenos">35</span>        <span class="n">client_name</span> <span class="o">=</span> <span class="n">fl_ctx</span><span class="o">.</span><span class="n">get_prop</span><span class="p">(</span><span class="s2">&quot;client_name&quot;</span><span class="p">)</span>
+<span class="linenos">35</span>        <span class="n">client_name</span> <span class="o">=</span> <span class="n">fl_ctx</span><span class="o">.</span><span class="n">get_prop</span><span class="p">(</span><span class="n">FLConstants</span><span class="o">.</span><span class="n">CLIENT_NAME</span><span class="p">)</span>
 <span class="linenos">36</span>        <span class="k">if</span> <span class="n">client_name</span> <span class="o">==</span> <span class="s2">&quot;site-1&quot;</span><span class="p">:</span>
 <span class="linenos">37</span>            <span class="n">new_fib</span><span class="p">[</span><span class="s2">&quot;sequence&quot;</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
 <span class="linenos">38</span>        <span class="k">elif</span> <span class="n">client_name</span> <span class="o">==</span> <span class="s2">&quot;site-2&quot;</span><span class="p">:</span>
@@ -364,7 +366,7 @@ numbers as well as the second number of original shareable.
 This represents the calculation of one term in the Fibonacci Sequence:</p>
 <p><code class="docutils literal notranslate"><span class="pre">[a,</span> <span class="pre">b]</span> <span class="pre">=&gt;</span> <span class="pre">[b,</span> <span class="pre">a</span> <span class="pre">+</span> <span class="pre">b]</span></code>
 wherein <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> are two consecutive Fibonacci numbers, with <code class="docutils literal notranslate"><span class="pre">b</span> <span class="pre">&gt;</span> <span class="pre">a</span></code>.</p>
-<p>In a real deep learning training scenario, each client does its training independently on its own dataset.
+<p>In a real federated learning training scenario, each client does its training independently on its own dataset.
 As such, the weights returned to the server will likely be different for each of the clients.
 Because this exercise is simply doing an addition operation rather than a training on a dataset, we
 <strong>hard-code</strong> a slight variation in the clients’ addition to demonstrate how the server aggregation works.
@@ -372,7 +374,7 @@ We define that client-1 always <strong>subtracts</strong> one extra from every e
 <strong>adds</strong> one extra to every element.</p>
 <p>Fortunately, because this is a FL system with two clients, the server can <code class="docutils literal notranslate"><span class="pre">aggregrate</span></code>
 (in this case average) the clients’ results to produce the correct Fibonacci number.</p>
-<p>You can learn more about <code class="docutils literal notranslate"><span class="pre">Shareable</span></code> and <code class="docutils literal notranslate"><span class="pre">FLContext</span></code> in the <a class="reference internal" href="hello_pt.html"><span class="doc">Quickstart (PyTorch)</span></a> exercise or in the <a class="reference external" href="https://nvidia.github.io/nvflare">NVFlare documention</a>.</p>
+<p>You can learn more about <code class="docutils literal notranslate"><span class="pre">Shareable</span></code> and <code class="docutils literal notranslate"><span class="pre">FLContext</span></code> in the <a class="reference internal" href="hello_pt.html"><span class="doc">Quickstart (PyTorch)</span></a> exercise or in the <a class="reference internal" href="../programming_guide.html#key-objects"><span class="std std-ref">documentation</span></a>.</p>
 </div>
 <div class="section" id="nvflare-server-application">
 <h2>NVFlare Server &amp; Application<a class="headerlink" href="#nvflare-server-application" title="Permalink to this headline">¶</a></h2>
@@ -443,7 +445,8 @@ We define that client-1 always <strong>subtracts</strong> one extra from every e
 </div>
 </div>
 <p>The model persistor is used to load and save models on the server. Here, the model is a <code class="docutils literal notranslate"><span class="pre">Model</span></code> object containing two calculated Fibonacci numbers.</p>
-<p>The expected format of the <code class="docutils literal notranslate"><span class="pre">Model</span></code> object is a dictionary with keys of type <code class="docutils literal notranslate"><span class="pre">str</span></code> and values of type <code class="docutils literal notranslate"><span class="pre">numpy.array</span></code>. This can be easily changed as long as all of the FL components agree on the format.</p>
+<p>The expected format of the <code class="docutils literal notranslate"><span class="pre">Model</span></code> object is a dictionary with keys of type <code class="docutils literal notranslate"><span class="pre">str</span></code> and values of type <code class="docutils literal notranslate"><span class="pre">numpy.array</span></code>.
+This can be easily changed as long as all of the FL components agree on the format.</p>
 <p>In this exercise, we can simply serialize the model dictionary using pickle and save it to weights.pickle
 inside the <code class="docutils literal notranslate"><span class="pre">server/run_1/mmar_server/models/</span></code> directory (weights file name specified in <code class="docutils literal notranslate"><span class="pre">config_fed_client.json</span></code>).
 Depending on the frameworks and tools, the methods of saving the model may vary.</p>
@@ -451,7 +454,7 @@ Depending on the frameworks and tools, the methods of saving the model may vary.
 <p class="admonition-title">Note</p>
 <p>Note that in our hello-examples, we are demonstrating Federated Learning using the familiar deep learning model concept.</p>
 <p>However, Federated Learning is not restricted to just deep learning and may not always involve models. Thus,
-we define a <code class="docutils literal notranslate"><span class="pre">Learnable</span></code> object (subclasses <code class="docutils literal notranslate"><span class="pre">dict</span></code>) as the most general form of data object generated through Federated Learning.
+we define a <a class="reference internal" href="../programming_guide.html#learnable"><span class="std std-ref">Learnable</span></a> object (subclasses <code class="docutils literal notranslate"><span class="pre">dict</span></code>) as the most general form of data object generated through Federated Learning.
 The <code class="docutils literal notranslate"><span class="pre">Model</span></code> class we are using here is simply a subclass of <code class="docutils literal notranslate"><span class="pre">Learnable</span></code>.</p>
 </div>
 </div>
@@ -485,7 +488,7 @@ For now, the default configurations are sufficient.</p>
 <span class="linenos">22</span>  <span class="p">},</span>
 <span class="linenos">23</span>  <span class="nt">&quot;outbound_filters&quot;</span><span class="p">:</span> <span class="p">[],</span>
 <span class="linenos">24</span>  <span class="nt">&quot;inbound_filters&quot;</span><span class="p">:</span> <span class="p">[],</span>
-<span class="linenos">25</span>  <span class="nt">&quot;model_persistor&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="linenos">25</span>  <span class="nt">&quot;persistor&quot;</span><span class="p">:</span> <span class="p">{</span>
 <span class="linenos">26</span>    <span class="nt">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;model_persistor.NumpyModelPersistor&quot;</span><span class="p">,</span>
 <span class="linenos">27</span>    <span class="nt">&quot;args&quot;</span><span class="p">:</span> <span class="p">{</span>
 <span class="linenos">28</span>      <span class="nt">&quot;save_name&quot;</span><span class="p">:</span> <span class="s2">&quot;weight.pickle&quot;</span>
@@ -498,7 +501,7 @@ For now, the default configurations are sufficient.</p>
 </pre></div>
 </div>
 </div>
-<p>Note that the <code class="docutils literal notranslate"><span class="pre">model_persistor</span></code> points to the custom <code class="docutils literal notranslate"><span class="pre">NumpyModelPersistor</span></code> with full Python module path.</p>
+<p>Note that the <code class="docutils literal notranslate"><span class="pre">persistor</span></code> points to the custom <code class="docutils literal notranslate"><span class="pre">NumpyModelPersistor</span></code> with full Python module path.</p>
 <div class="literal-block-wrapper docutils container" id="id4">
 <div class="code-block-caption"><span class="caption-text">config_fed_client.json</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="p">{</span>
@@ -565,18 +568,6 @@ the FL process. Log in by entering <code class="docutils literal notranslate"><s
 <h3>Running the FL<a class="headerlink" href="#running-the-fl" title="Permalink to this headline">¶</a></h3>
 <p>Enter the commands below in order.  Pay close attention to what happens in each of four terminals.  You
 can see the admin controls server and clients with each command.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>It’s possible the updated commands are not available.  In such case, please use the old commands.</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>&gt; upload_folder hello-numpy
-&gt; set_run_number <span class="m">1</span>
-&gt; deploy hello-numpy server
-&gt; deploy hello-numpy client
-&gt; start server
-&gt; start client
-</pre></div>
-</div>
-</div>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>&gt; upload_app hello-numpy
 </pre></div>
 </div>

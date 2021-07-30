@@ -71,7 +71,7 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="nvflare" href="../apidocs/modules.html" />
+    <link rel="next" title="User Guide" href="../user_guide.html" />
     <link rel="prev" title="Quickstart (Numpy)" href="hello_numpy.html" /> 
 </head>
 
@@ -162,17 +162,15 @@
             
             
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../user_guide.html">User Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../programming_guide.html">Programming Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Hello World Examples</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="hello_installation.html">Quickstart (Installation)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../quickstart.html">Quickstart</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="hello_pt.html">Quickstart (PyTorch)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hello_numpy.html">Quickstart (Numpy)</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Quickstart (TensorFlow 2)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#before-you-start">Before You Start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#introduction">Introduction</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#nvflare-client">NVFlare Client</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#network">Network</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#neural-network">Neural Network</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#dataset-setup">Dataset &amp; Setup</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#link-nvflare-with-local-train">Link NVFlare with Local Train</a></li>
 </ul>
@@ -193,7 +191,11 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../programming_guide.html">Programming Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../apidocs/modules.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix.html">Appendix</a></li>
 </ul>
 
             
@@ -242,7 +244,7 @@
     
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
-          <li><a href="../examples.html">Hello World Examples</a> &raquo;</li>
+          <li><a href="../quickstart.html">Quickstart</a> &raquo;</li>
         
       <li>Quickstart (TensorFlow 2)</li>
     
@@ -266,10 +268,14 @@
 <div class="section" id="before-you-start">
 <h2>Before You Start<a class="headerlink" href="#before-you-start" title="Permalink to this headline">¶</a></h2>
 <p>We recommend you first finish either the <a class="reference internal" href="hello_pt.html"><span class="doc">Quickstart (PyTorch)</span></a> or the <a class="reference internal" href="hello_numpy.html"><span class="doc">Quickstart (Numpy)</span></a> exercise.
-Those guides go more in depth in explaining the federated learning aspect of <a class="reference external" href="https://pypi.org/project/nvflare/">NVFlare</a>.
-Through this exercise, you will integrate NVFlare with the popular
-deep learning framework <a class="reference external" href="https://www.tensorflow.org/">TensorFlow 2</a> and learn how to use NVFlare to train a convolutional network with the MNIST dataset.</p>
-<p>Here we assume you have already installed <code class="docutils literal notranslate"><span class="pre">NVFlare</span></code> inside a python virtual environment and have already cloned the repo.</p>
+Those guides go more in depth in explaining the federated learning aspect of <a class="reference external" href="https://pypi.org/project/nvflare/">NVFlare</a>.</p>
+<p>Here we assume you have already installed NVFlare inside a python virtual environment and have already cloned the repo.</p>
+</div>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>Through this exercise, you will integrate NVFlare with the popular
+deep learning framework <a class="reference external" href="https://www.tensorflow.org/">TensorFlow 2</a> and learn how to use NVFlare to train a convolutional network with the MNIST dataset.
+You will also be introduced to some new components and concepts, including the filter, aggregrator, and event handler.</p>
 <p>The design of this exercise consists of one <strong>server</strong> and two <strong>clients</strong> all having the same TensorFlow 2 model.
 The following steps compose one cycle of weight updates, called a <strong>round</strong>:</p>
 <blockquote>
@@ -295,12 +301,12 @@ Every custom FL application must contain three folders:</p>
 </div>
 <div class="section" id="nvflare-client">
 <h2>NVFlare Client<a class="headerlink" href="#nvflare-client" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="network">
-<h3>Network<a class="headerlink" href="#network" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="neural-network">
+<h3>Neural Network<a class="headerlink" href="#neural-network" title="Permalink to this headline">¶</a></h3>
 <p>With all the required dependencies installed, you are ready to run a Federated Learning
 with two clients and one server. Before you start, let’s see what a simplified MNIST network looks like.</p>
-<div class="literal-block-wrapper docutils container" id="id2">
-<div class="code-block-caption"><span class="caption-text">net.py</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">net.py</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="linenos"> 2</span>
 <span class="linenos"> 3</span>
@@ -363,7 +369,7 @@ Additionally, you must setup the optimizer, loss function and transform to proce
 </pre></div>
 </div>
 <p>How can you ensure this setup method is called before the client receives the model from the server?  The Trainer
-class is also a FLComponent, which always receives <code class="docutils literal notranslate"><span class="pre">Event</span></code> whenever NVFlare enters or leaves a certain stage.
+class is also a <a class="reference internal" href="../programming_guide.html#flcomponent"><span class="std std-ref">FLComponent</span></a>, which always receives <code class="docutils literal notranslate"><span class="pre">Event</span></code> whenever NVFlare enters or leaves a certain stage.
 In this case, there is an <code class="docutils literal notranslate"><span class="pre">Event</span></code> called <code class="docutils literal notranslate"><span class="pre">EventType.START_RUN</span></code> which perfectly matches these requirements.
 Because our trainer is a subclass of <code class="docutils literal notranslate"><span class="pre">FLComponent</span></code>, you can implement the handler to handle the event and call the setup method:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">20</span>    <span class="k">def</span> <span class="nf">handle_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">fl_ctx</span><span class="p">:</span> <span class="n">FLContext</span><span class="p">):</span>
@@ -375,7 +381,7 @@ Because our trainer is a subclass of <code class="docutils literal notranslate">
 <p class="admonition-title">Note</p>
 <p>This is a new concept you haven’t learned in previous two exercises.  The concepts about <code class="docutils literal notranslate"><span class="pre">event</span></code> and <code class="docutils literal notranslate"><span class="pre">handler</span></code> are very powerful because
 you are free to add your logic so it can run at different time and process various events.  The entire list of events fired by
-NVFlare can be found at <a class="reference external" href="https://nvidia.github.io/nvflare">NVFlare documentation</a>.</p>
+NVFlare is shown at <a class="reference internal" href="../programming_guide.html#event-types"><span class="std std-ref">Event types</span></a>.</p>
 </div>
 <p>You have everything you need, now let’s implement the last method called <code class="docutils literal notranslate"><span class="pre">train</span></code>, which is
 called every time the client receives an updated model from the server.</p>
@@ -434,7 +440,7 @@ called every time the client receives an updated model from the server.</p>
 <span class="linenos">103</span>        <span class="k">return</span> <span class="n">shareable</span>
 </pre></div>
 </div>
-<p>Every NVFlare client receives the model weights from the server in <code class="docutils literal notranslate"><span class="pre">shareable[ShareableKey.MODEL_WEIGHTS]</span></code>.
+<p>Every NVFlare client receives the model weights from the server in the <a class="reference internal" href="../programming_guide.html#shareable"><span class="std std-ref">shareable</span></a>.
 This exercise uses a simple <code class="docutils literal notranslate"><span class="pre">exclude_var</span></code> filter, so make sure to replace the missing layer with weights from the clients’ previous training round:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">model_weights</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
       <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">value</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
@@ -462,12 +468,12 @@ back to the NVFlare server.</p>
 <h2>NVFlare Server &amp; Application<a class="headerlink" href="#nvflare-server-application" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="filter">
 <h3>Filter<a class="headerlink" href="#filter" title="Permalink to this headline">¶</a></h3>
-<p>The filter is used for addition data processing in the <code class="docutils literal notranslate"><span class="pre">shareable</span></code>, either inbound or outbound from the client and/or server.</p>
+<p>The <a class="reference internal" href="../programming_guide.html#filters"><span class="std std-ref">filter</span></a> is used for additional data processing in the <code class="docutils literal notranslate"><span class="pre">shareable</span></code>, either inbound or outbound from the client and/or server.</p>
 <p>For this exercise, we use a basic <code class="docutils literal notranslate"><span class="pre">exclude_var</span></code> filter to exclude the variable/layer <code class="docutils literal notranslate"><span class="pre">flatten</span></code> outbound from the client to the server.
 The excluded layer is replaced with all zeros of the same shape, which reduces compression size and ensures that the clients’ weights
 for this variable are not shared with the server.</p>
-<div class="literal-block-wrapper docutils container" id="id3">
-<div class="code-block-caption"><span class="caption-text">filter.py</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">filter.py</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="linenos"> 2</span>
 <span class="linenos"> 3</span><span class="kn">from</span> <span class="nn">nvflare.apis.filter</span> <span class="kn">import</span> <span class="n">Filter</span>
@@ -526,9 +532,9 @@ The parameters for what is excluded and the inbound/outbound option are all set 
 </div>
 <div class="section" id="model-aggregator">
 <h3>Model Aggregator<a class="headerlink" href="#model-aggregator" title="Permalink to this headline">¶</a></h3>
-<p>The model aggregator is used by the server to aggregrate the clients’ models into one model.</p>
-<div class="literal-block-wrapper docutils container" id="id4">
-<div class="code-block-caption"><span class="caption-text">model_aggregator.py</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<p>The <a class="reference internal" href="../programming_guide.html#aggregator"><span class="std std-ref">model aggregator</span></a> is used by the server to aggregrate the clients’ models into one model.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">model_aggregator.py</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span>
 <span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="linenos"> 3</span>
@@ -618,13 +624,13 @@ Note that the second return boolean can be set to <code class="docutils literal 
 otherwise by default <code class="docutils literal notranslate"><span class="pre">aggregate()</span></code> will always be called once the number of submissions is &gt;= <code class="docutils literal notranslate"><span class="pre">min_clients</span></code>.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">aggregrate()</span></code> function then performs the aggregration procedure and returns a new shareable.</p>
 <p>FLContext is used throughout these functions to provide various useful FL-related information.
-You can find more details in the <a class="reference external" href="https://nvidia.github.io/nvflare">NVFlare documentation</a>.</p>
+You can find more details in the <a class="reference internal" href="../programming_guide.html#flcontext"><span class="std std-ref">documentation</span></a>.</p>
 </div>
 <div class="section" id="model-persistor">
 <h3>Model Persistor<a class="headerlink" href="#model-persistor" title="Permalink to this headline">¶</a></h3>
 <p>The model persistor is used to load and save models on the server.</p>
-<div class="literal-block-wrapper docutils container" id="id5">
-<div class="code-block-caption"><span class="caption-text">model_persistor.py</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">model_persistor.py</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">os</span>
 <span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">pickle</span>
 <span class="linenos"> 3</span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -704,8 +710,8 @@ Depending on the frameworks and tools, the methods of saving the model may vary.
 <div class="section" id="application-configuration">
 <h3>Application Configuration<a class="headerlink" href="#application-configuration" title="Permalink to this headline">¶</a></h3>
 <p>Finally, inside the config folder there are two files, <code class="docutils literal notranslate"><span class="pre">config_fed_client.json</span></code> and <code class="docutils literal notranslate"><span class="pre">config_fed_server.json</span></code>.</p>
-<div class="literal-block-wrapper docutils container" id="id6">
-<div class="code-block-caption"><span class="caption-text">config_fed_server.json</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">config_fed_server.json</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="p">{</span>
 <span class="linenos"> 2</span>  <span class="nt">&quot;format_version&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
 <span class="linenos"> 3</span>  <span class="nt">&quot;servers&quot;</span><span class="p">:</span> <span class="p">[</span>
@@ -724,7 +730,7 @@ Depending on the frameworks and tools, the methods of saving the model may vary.
 <span class="linenos">16</span>  <span class="p">},</span>
 <span class="linenos">17</span>  <span class="nt">&quot;outbound_filters&quot;</span><span class="p">:</span> <span class="p">[],</span>
 <span class="linenos">18</span>  <span class="nt">&quot;inbound_filters&quot;</span><span class="p">:</span> <span class="p">[],</span>
-<span class="linenos">19</span>  <span class="nt">&quot;model_persistor&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="linenos">19</span>  <span class="nt">&quot;persistor&quot;</span><span class="p">:</span> <span class="p">{</span>
 <span class="linenos">20</span>    <span class="nt">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;model_persistor.TF2ModelPersistor&quot;</span><span class="p">,</span>
 <span class="linenos">21</span>    <span class="nt">&quot;args&quot;</span><span class="p">:</span> <span class="p">{</span>
 <span class="linenos">22</span>      <span class="nt">&quot;save_name&quot;</span><span class="p">:</span> <span class="s2">&quot;tf2weights.pickle&quot;</span>
@@ -738,9 +744,9 @@ Depending on the frameworks and tools, the methods of saving the model may vary.
 </div>
 </div>
 <p>Note that the <code class="docutils literal notranslate"><span class="pre">aggregator</span></code> points to the custom <code class="docutils literal notranslate"><span class="pre">AccumulateAggregator</span></code>,
-and the <code class="docutils literal notranslate"><span class="pre">model_persistor</span></code> points to the custom <code class="docutils literal notranslate"><span class="pre">TF2ModelPersistor</span></code> with full Python module paths.</p>
-<div class="literal-block-wrapper docutils container" id="id7">
-<div class="code-block-caption"><span class="caption-text">config_fed_client.json</span><a class="headerlink" href="#id7" title="Permalink to this code">¶</a></div>
+and the <code class="docutils literal notranslate"><span class="pre">persistor</span></code> points to the custom <code class="docutils literal notranslate"><span class="pre">TF2ModelPersistor</span></code> with full Python module paths.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">config_fed_client.json</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="p">{</span>
 <span class="linenos"> 2</span>  <span class="nt">&quot;format_version&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
 <span class="linenos"> 3</span>  <span class="nt">&quot;platform&quot;</span><span class="p">:</span> <span class="s2">&quot;TF2&quot;</span><span class="p">,</span>
@@ -815,18 +821,6 @@ the FL process. Log in by entering <code class="docutils literal notranslate"><s
 <h3>Running the FL<a class="headerlink" href="#running-the-fl" title="Permalink to this headline">¶</a></h3>
 <p>Enter the commands below in order.  Pay close attention to what happens in each of four terminals.  You
 can see the admin controls server and clients with each command.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>It’s possible the updated commands are not available.  In such case, please use the old commands:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>&gt; upload_folder hello-tf2
-&gt; set_run_number <span class="m">1</span>
-&gt; deploy hello-tf2 server
-&gt; deploy hello-tf2 client
-&gt; start server
-&gt; start client
-</pre></div>
-</div>
-</div>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>&gt; upload_app hello-tf2
 </pre></div>
 </div>
@@ -903,7 +897,7 @@ The full <a class="reference external" href="https://gitlab-master.nvidia.com/dl
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="../apidocs/modules.html" class="btn btn-neutral float-right" title="nvflare" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../user_guide.html" class="btn btn-neutral float-right" title="User Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="hello_numpy.html" class="btn btn-neutral float-left" title="Quickstart (Numpy)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 

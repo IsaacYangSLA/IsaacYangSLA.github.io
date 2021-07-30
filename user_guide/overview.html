@@ -71,7 +71,7 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Provisioning tool" href="provisioning_tool.html" />
+    <link rel="next" title="NVFlare Application" href="application.html" />
     <link rel="prev" title="User Guide" href="../user_guide.html" /> 
 </head>
 
@@ -162,6 +162,8 @@
             
             
               <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../user_guide.html">User Guide</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Overview</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#introduction">Introduction</a><ul>
@@ -206,16 +208,16 @@
 <li class="toctree-l3"><a class="reference internal" href="#known-issues">Known issues</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="application.html">NVFlare Application</a></li>
 <li class="toctree-l2"><a class="reference internal" href="provisioning_tool.html">Provisioning tool</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html">Configuration details</a></li>
 <li class="toctree-l2"><a class="reference internal" href="authorization.html">Authorization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="admin_commands.html">Administrator commands</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../programming_guide.html">Programming Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../examples.html">Hello World Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../apidocs/modules.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix.html">Appendix</a></li>
 </ul>
 
             
@@ -289,7 +291,7 @@
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
 <p>NVFlare utilizes provisioning and admin client to reduce the amount of human coordination involved to set up a federated learning project
 and provides an admin the ability to deploy the server and client configurations, start the server / clients, abort the training,
-restart the training, and more. A provisioning tool can be configured to create a startup kit for each site in an encrypted package.
+restart the training, and more. A provisioning tool can be configured to create one startup kit for each site in an encrypted package.
 These packages can then be delivered to each site ready to go, streamlining the process to provision, start, and operate federated learning.</p>
 <div class="section" id="provision-start-operate">
 <h3>Provision - Start - Operate<a class="headerlink" href="#provision-start-operate" title="Permalink to this headline">¶</a></h3>
@@ -433,7 +435,6 @@ the client successfully connected:</p>
 </div>
 <p>If the server is up, you may need to troubleshoot with settings for firewall ports to make sure that the proper
 permissions are in place. This could require coordination between the lead IT and site IT personnel.</p>
-<p>For more information about configuring the network to enable federated learning, see <a class="reference internal" href="configuration.html#fl-network-configuration"><span class="std std-ref">FL network configuration</span></a>.</p>
 </div>
 <div class="section" id="federated-learning-administration-client-email-zip">
 <h3>Federated learning administration client ($EMAIL.zip)<a class="headerlink" href="#federated-learning-administration-client-email-zip" title="Permalink to this headline">¶</a></h3>
@@ -466,21 +467,21 @@ uploading files as well as directories created for federated learning runs will 
 <h3>Example of running federated learning from the administration client<a class="headerlink" href="#example-of-running-federated-learning-from-the-administration-client" title="Permalink to this headline">¶</a></h3>
 <p>With all connections between the FL server, FL clients, and administration clients open and all of the parties
 started successfully as described in the preceding section, <a class="reference internal" href="#federated-learning-administration-client-email-zip">Federated learning administration client ($EMAIL.zip)</a>,
-the following is an example of a series of admin commands and their outputs to operate a federated learning project.
-For a complete list of admin commands, see <a class="reference external" href="fl_admin_commands.html">Federated learning administrator commands</a>.</p>
+the following is an example of a series of admin commands and their outputs to operate a federated learning project.</p>
+<p>For a complete list of admin commands, see <a class="reference internal" href="admin_commands.html#administrator-commands"><span class="std std-ref">Administrator commands</span></a>.</p>
 <div class="section" id="check-status-of-fl-server-and-fl-client">
 <h4>Check status of FL server and FL client<a class="headerlink" href="#check-status-of-fl-server-and-fl-client" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">&gt; check_status server</span>
 <span class="go">FL run number has not been set.</span>
 <span class="go">FL server status: training not started</span>
 <span class="go">Registered clients: 2</span>
-<span class="go">client name:flclient1    instance name:flclient1    token: 53b6f87a-79f0-4127-9735-72051de2dad9</span>
+<span class="go">client name:flclient1   instance name:flclient1     token: 53b6f87a-79f0-4127-9735-72051de2dad9</span>
 <span class="go">client name:flclient2       instance name:flclient2 token: b37644d4-7910-4a11-adf9-14cd790c1151</span>
 
 <span class="go">Done [9325 usecs] 2020-07-07 16:31:15.175153</span>
 
 <span class="go">&gt; check_status client</span>
-<span class="go">instance:flclient1  : client name: flclient1        token: 53b6f87a-79f0-4127-9735-72051de2dad9     status: training not started</span>
+<span class="go">instance:flclient1 : client name: flclient1 token: 53b6f87a-79f0-4127-9735-72051de2dad9     status: training not started</span>
 <span class="go">instance:flclient2 : client name: flclient2 token: b37644d4-7910-4a11-adf9-14cd790c1151     status: training not started</span>
 
 <span class="go">Done [308172 usecs] 2020-07-07 16:31:27.300195</span>
@@ -564,7 +565,7 @@ can be checked with the command <code class="docutils literal notranslate"><span
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The command <code class="docutils literal notranslate"><span class="pre">start_mgpu</span> <span class="pre">client</span> <span class="pre">&lt;gpu</span> <span class="pre">number&gt;</span> <span class="pre">&lt;client</span> <span class="pre">name&gt;</span></code> can be used to start multiple GPU federated learning
-training on clients.</p>
+training on clients. Please refer to <a class="reference internal" href="../faq.html#multi-gpu-training"><span class="std std-ref">multi-gpu training</span></a>.</p>
 </div>
 </div>
 <div class="section" id="stopping-federated-learning-training">
@@ -723,7 +724,7 @@ and that causes timeout.</p></li>
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="provisioning_tool.html" class="btn btn-neutral float-right" title="Provisioning tool" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="application.html" class="btn btn-neutral float-right" title="NVFlare Application" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="../user_guide.html" class="btn btn-neutral float-left" title="User Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 

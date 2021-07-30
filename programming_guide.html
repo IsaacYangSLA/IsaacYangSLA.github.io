@@ -162,29 +162,30 @@
             
             
               <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="user_guide.html">User Guide</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Programming Guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#key-objects">Key Objects</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#learnable">Learnable</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#shareable">Shareable</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#fl-context">FL Context</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#flcontext">FLContext</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#api-specification">API Specification</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#flcomponent">FLComponent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#flcomponent">FLComponent</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#event-types">Event types</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#fl-components">FL Components</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#filters">Filters</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#handlers">Handlers</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#event-types">Event types</a></li>
-</ul>
-</li>
 <li class="toctree-l3"><a class="reference internal" href="#aggregator">Aggregator</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#trainer">Trainer</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#how-to-access-the-data-in-the-standard-flcomponents">How to access the data in the standard FLComponents</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#default-data-in-the-built-in-flcomponents">Default data in the built-in FLComponents</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#data-available-in-the-shareable">Data available in the Shareable</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#data-available-in-the-shared-flcontext">Data available in the shared FLContext</a></li>
 </ul>
@@ -192,8 +193,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">Hello World Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="apidocs/modules.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
 </ul>
 
             
@@ -260,68 +261,310 @@
            <div itemprop="articleBody">
             
   <div class="section" id="programming-guide">
-<span id="id1"></span><h1>Programming Guide<a class="headerlink" href="#programming-guide" title="Permalink to this headline">¶</a></h1>
+<h1>Programming Guide<a class="headerlink" href="#programming-guide" title="Permalink to this headline">¶</a></h1>
 <p>Nvidia Federated Learning Application Runtime Environment (NVFlare) is designed with a componentized architecture which
 allows different users to bring in customized server and client <code class="docutils literal notranslate"><span class="pre">Trainer</span></code>, <code class="docutils literal notranslate"><span class="pre">Validator</span></code> and <code class="docutils literal notranslate"><span class="pre">Aggregator</span></code> into NVFlare framework.</p>
 <p>You can also define customized <code class="docutils literal notranslate"><span class="pre">Learnable</span></code> and <code class="docutils literal notranslate"><span class="pre">LearnablePersistor</span></code> to load and persist the learnable in your own way.
 Moreover, NVFlare also allows for plugins like an encryptor to add in homomorphic encryption for model security in the FL study.</p>
+<p>This guide introduces key objects and components you should know before implementing your own components.
+If you want to use your components in an FL application, you will need to change the config in the application folder.
+Please refer to <a class="reference internal" href="user_guide/application.html#nvflare-application"><span class="std std-ref">NVFlare Application</span></a> for more details.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#key-objects" id="id2">Key Objects</a></p>
+<li><p><a class="reference internal" href="#key-objects" id="id1">Key Objects</a></p>
 <ul>
-<li><p><a class="reference internal" href="#learnable" id="id3">Learnable</a></p></li>
-<li><p><a class="reference internal" href="#shareable" id="id4">Shareable</a></p></li>
-<li><p><a class="reference internal" href="#fl-context" id="id5">FL Context</a></p>
+<li><p><a class="reference internal" href="#learnable" id="id2">Learnable</a></p></li>
+<li><p><a class="reference internal" href="#shareable" id="id3">Shareable</a></p></li>
+<li><p><a class="reference internal" href="#flcontext" id="id4">FLContext</a></p>
 <ul>
-<li><p><a class="reference internal" href="#api-specification" id="id6">API Specification</a></p></li>
+<li><p><a class="reference internal" href="#api-specification" id="id5">API Specification</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#flcomponent" id="id7">FLComponent</a></p></li>
+<li><p><a class="reference internal" href="#flcomponent" id="id6">FLComponent</a></p>
+<ul>
+<li><p><a class="reference internal" href="#event-types" id="id7">Event types</a></p></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><p><a class="reference internal" href="#fl-components" id="id8">FL Components</a></p>
 <ul>
 <li><p><a class="reference internal" href="#filters" id="id9">Filters</a></p></li>
-<li><p><a class="reference internal" href="#handlers" id="id10">Handlers</a></p>
-<ul>
-<li><p><a class="reference internal" href="#event-types" id="id11">Event types</a></p></li>
+<li><p><a class="reference internal" href="#aggregator" id="id10">Aggregator</a></p></li>
+<li><p><a class="reference internal" href="#trainer" id="id11">Trainer</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#aggregator" id="id12">Aggregator</a></p></li>
-<li><p><a class="reference internal" href="#trainer" id="id13">Trainer</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#how-to-access-the-data-in-the-standard-flcomponents" id="id14">How to access the data in the standard FLComponents</a></p>
+<li><p><a class="reference internal" href="#default-data-in-the-built-in-flcomponents" id="id12">Default data in the built-in FLComponents</a></p>
 <ul>
-<li><p><a class="reference internal" href="#data-available-in-the-shareable" id="id15">Data available in the Shareable</a></p></li>
-<li><p><a class="reference internal" href="#data-available-in-the-shared-flcontext" id="id16">Data available in the shared FLContext</a></p></li>
+<li><p><a class="reference internal" href="#data-available-in-the-shareable" id="id13">Data available in the Shareable</a></p></li>
+<li><p><a class="reference internal" href="#data-available-in-the-shared-flcontext" id="id14">Data available in the shared FLContext</a></p></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="key-objects">
-<h2><a class="toc-backref" href="#id2">Key Objects</a><a class="headerlink" href="#key-objects" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id1">Key Objects</a><a class="headerlink" href="#key-objects" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="learnable">
-<h3><a class="toc-backref" href="#id3">Learnable</a><a class="headerlink" href="#learnable" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">Learnable</span></code> is the object that holds the data representing deep learning.
-The data includes the model training metadata, and the model weights.
-Typically, the <code class="docutils literal notranslate"><span class="pre">Learnable</span></code> object is the result generated by the model training process.</p>
+<h3><a class="toc-backref" href="#id2">Learnable</a><a class="headerlink" href="#learnable" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Learnable</span></code> is the result of an FL application.
+For example, in the deep learning scenario, it can be the model weights.
+In the AutoML case, it can be the network architecture.</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">LearnablePersistor</span></code> defines how to load and save a <code class="docutils literal notranslate"><span class="pre">Learnable</span></code>.</p>
 </div>
 <div class="section" id="shareable">
-<h3><a class="toc-backref" href="#id4">Shareable</a><a class="headerlink" href="#shareable" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">Shareable</span></code> is an object containing data to be shared with the other parties. The <code class="docutils literal notranslate"><span class="pre">Shareable</span></code> object needs to be
-self-contained. Typically, the <code class="docutils literal notranslate"><span class="pre">Shareable</span></code> object contains the data to indicate the data type, model weights, meta
-data, etc. It should hold enough information for the other party to know how to process the data.</p>
-<p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">shareable</span> <span class="o">=</span> <span class="n">Shareable</span><span class="p">()</span>
-
-<span class="n">shareable</span><span class="p">[</span><span class="n">ShareableKey</span><span class="o">.</span><span class="n">TYPE</span><span class="p">]</span> <span class="o">=</span> <span class="n">ShareableValue</span><span class="o">.</span><span class="n">TYPE_WEIGHT_DIFF</span>
-<span class="n">shareable</span><span class="p">[</span><span class="n">ShareableKey</span><span class="o">.</span><span class="n">DATA_TYPE</span><span class="p">]</span> <span class="o">=</span> <span class="n">ShareableValue</span><span class="o">.</span><span class="n">DATA_TYPE_UNENCRYPTED</span>
-<span class="n">shareable</span><span class="p">[</span><span class="n">ShareableKey</span><span class="o">.</span><span class="n">MODEL_WEIGHTS</span><span class="p">]</span> <span class="o">=</span> <span class="n">local_model_dict</span>
-<span class="n">shareable</span><span class="p">[</span><span class="n">ShareableKey</span><span class="o">.</span><span class="n">META</span><span class="p">]</span> <span class="o">=</span> <span class="n">meta_data</span>
+<h3><a class="toc-backref" href="#id3">Shareable</a><a class="headerlink" href="#shareable" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Shareable</span></code> is an object containing data to be shared between the FL server and the FL clients.
+The <code class="docutils literal notranslate"><span class="pre">Shareable</span></code> object needs to be self-contained.
+In the deep learning scenario, the <code class="docutils literal notranslate"><span class="pre">Shareable</span></code> object contains the model weights type, model weights,
+meta data, etc. It should hold enough information for the FL clients to know how to process the data.</p>
+<p>The difference between <code class="docutils literal notranslate"><span class="pre">Learnable</span></code> and <code class="docutils literal notranslate"><span class="pre">Shareable</span></code> is that <code class="docutils literal notranslate"><span class="pre">Learnable</span></code> is a concept that only
+exists on the FL server side.
+By doing this, NVFlare decouples the FL server and client side training.</p>
+<p>For example, in the deep learning scenario, let’s assume we have a model consists of two neural networks.
+Then the <code class="docutils literal notranslate"><span class="pre">Learnable</span></code> would be all the weights and biases in this model.
+We could learn weights for the first neural network in client1 and client2,
+and learn weights for the second neural network in client3 and client4.
+So the <code class="docutils literal notranslate"><span class="pre">Shareable</span></code> that client1 and client2 receives and sends out are the weights and/or network architecture
+of the first neural network.</p>
+<p>You can always define your own <code class="docutils literal notranslate"><span class="pre">Learnable</span></code> and <code class="docutils literal notranslate"><span class="pre">Shareable</span></code> structure.
+Then you can write your <code class="docutils literal notranslate"><span class="pre">ShareableGenerator</span></code> to implements <code class="docutils literal notranslate"><span class="pre">learnable_to_shareable()</span></code> and <code class="docutils literal notranslate"><span class="pre">shareable_to_learnable()</span></code>
+functions to do custom conversion between <code class="docutils literal notranslate"><span class="pre">Learnable</span></code> and <code class="docutils literal notranslate"><span class="pre">Shareable</span></code>.
+If you want to see the default schema, please check <a class="reference internal" href="#data-available-in-the-shareable">Data available in the Shareable</a>.</p>
+</div>
+<div class="section" id="flcontext">
+<h3><a class="toc-backref" href="#id4">FLContext</a><a class="headerlink" href="#flcontext" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">FLContext</span></code> is used to hold the processing data and pass along the data between the FL components.
+FL components can set the data into the <code class="docutils literal notranslate"><span class="pre">FLContext</span></code> and later the data can be retrieved by other components.
+Each FL component has access to the <code class="docutils literal notranslate"><span class="pre">FLContext</span></code> within their method calls.</p>
+<div class="section" id="api-specification">
+<h4><a class="toc-backref" href="#id5">API Specification</a><a class="headerlink" href="#api-specification" title="Permalink to this headline">¶</a></h4>
+<p>Property Access</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">set_prop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">private</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">get_prop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Predefined ShareableKeys:</p>
+<p>With <code class="docutils literal notranslate"><span class="pre">set_prop</span></code>, you can set any object to the context by providing a key and the value of the object.</p>
+<p>When <code class="docutils literal notranslate"><span class="pre">private</span></code> is set to True, this property can only be used locally.
+When <code class="docutils literal notranslate"><span class="pre">private</span></code> is set to False, this property can be shared to its peer during the FL communication.
+In other words, when an FL client is communicating with other clients, the non-private properties in the FLContext
+will be sent to those clients.</p>
+<p>There are many predefined keys used by different <code class="docutils literal notranslate"><span class="pre">FLComponent</span></code> functions.
+If you want to use the components that NVFlare provided, please refer to <a class="reference internal" href="#data-available-in-the-shared-flcontext">Data available in the shared FLContext</a>
+and <code class="docutils literal notranslate"><span class="pre">nvflare.apis.fl_constant</span></code> for details.
+Otherwise, you can write your own components by extending the following class:</p>
+</div>
+</div>
+<div class="section" id="flcomponent">
+<h3><a class="toc-backref" href="#id6">FLComponent</a><a class="headerlink" href="#flcomponent" title="Permalink to this headline">¶</a></h3>
+<p>This is the base class of all the FL components.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">FLComponent</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">handle_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">fl_ctx</span><span class="p">:</span> <span class="n">FLContext</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            perform the handler process based on the event_type.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            event_type: evnt type fired by workflow</span>
+<span class="sd">            fl_ctx: FLContext</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+<p>Each <code class="docutils literal notranslate"><span class="pre">FLComponent</span></code> is automatically added as an event handler in the system when a new instance is created.
+You can implement the <code class="docutils literal notranslate"><span class="pre">handle_event</span></code> method to plugin additional customized actions to the FL workflows.
+NVFlare has defined some events as below.
+Your components can do custom logic with each event.</p>
+<div class="section" id="event-types">
+<h4><a class="toc-backref" href="#id7">Event types</a><a class="headerlink" href="#event-types" title="Permalink to this headline">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Event</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>START_RUN</p></td>
+<td><p>Start of the current “run”</p></td>
+</tr>
+<tr class="row-odd"><td><p>END_RUN</p></td>
+<td><p>End of the current “run”</p></td>
+</tr>
+<tr class="row-even"><td><p>START_ROUND</p></td>
+<td><p>Start of the “round”</p></td>
+</tr>
+<tr class="row-odd"><td><p>END_ROUND</p></td>
+<td><p>End of the “round”</p></td>
+</tr>
+<tr class="row-even"><td><p>CLIENT_REGISTER</p></td>
+<td><p>When the client register to the server</p></td>
+</tr>
+<tr class="row-odd"><td><p>GET_GLOBAL_SHAREABLE</p></td>
+<td><p>When server get the request to fetch global shareable</p></td>
+</tr>
+<tr class="row-even"><td><p>CLIENT_QUIT</p></td>
+<td><p>When the client quit from the server.</p></td>
+</tr>
+<tr class="row-odd"><td><p>AFTER_SEND_CLIENT_SHAREABLE</p></td>
+<td><p>After the client sends the update to the server.</p></td>
+</tr>
+<tr class="row-even"><td><p>RECEIVE_CONTRIBUTION</p></td>
+<td><p>When the server receives the update from the client.</p></td>
+</tr>
+<tr class="row-odd"><td><p>BEFORE_AGGREGATION</p></td>
+<td><p>Before the aggregation call on the server.</p></td>
+</tr>
+<tr class="row-even"><td><p>END_AGGREGATION</p></td>
+<td><p>After the aggregation call on the server.</p></td>
+</tr>
+<tr class="row-odd"><td><p>RECEIVE_GLOBAL_SHAREABLE</p></td>
+<td><p>After the client receives the global shareable from the server.</p></td>
+</tr>
+<tr class="row-even"><td><p>BEFORE_PULL_GLOBAL_SHAREABLE</p></td>
+<td><p>Before the client starts to pull the global shareable from the server.</p></td>
+</tr>
+<tr class="row-odd"><td><p>AFTER_PULL_GLOBAL_SHAREABLE</p></td>
+<td><p>After the client pull the global shareable from the server.</p></td>
+</tr>
+<tr class="row-even"><td><p>BEFORE_TRAIN</p></td>
+<td><p>Before the client trainer starts the local train.</p></td>
+</tr>
+<tr class="row-odd"><td><p>AFTER_TRAIN</p></td>
+<td><p>After the client trainer starts the local train.</p></td>
+</tr>
+<tr class="row-even"><td><p>BEFORE_SEND_CLIENT_SHAREABLE</p></td>
+<td><p>Before the client starts to send the update to the server.</p></td>
+</tr>
+<tr class="row-odd"><td><p>BEFORE_ACCEPT</p></td>
+<td><p>Before the server calls the aggregator <code class="docutils literal notranslate"><span class="pre">accept()</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p>AFTER_ACCEPT</p></td>
+<td><p>After the server calls the aggregator <code class="docutils literal notranslate"><span class="pre">accept()</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>BEFORE_SHAREABLE_TO_LEARNABLE</p></td>
+<td><p>Before the shareable_generator call <code class="docutils literal notranslate"><span class="pre">shareable_to_learnable()</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p>AFTER_SHAREABLE_TO_LEARNABLE</p></td>
+<td><p>After the shareable_generator call <code class="docutils literal notranslate"><span class="pre">shareable_to_learnable()</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>BEFORE_LEARNABLE_PERSIST</p></td>
+<td><p>Before the LearnablePersistor call <code class="docutils literal notranslate"><span class="pre">save()</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p>AFTER_LEARNABLE_PERSIST</p></td>
+<td><p>After the LearnablePersistor call <code class="docutils literal notranslate"><span class="pre">save()</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="section" id="fl-components">
+<h2><a class="toc-backref" href="#id8">FL Components</a><a class="headerlink" href="#fl-components" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="filters">
+<h3><a class="toc-backref" href="#id9">Filters</a><a class="headerlink" href="#filters" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Filter</span></code> is used to transform the <code class="docutils literal notranslate"><span class="pre">Shareable</span></code> object between the communicating parties.
+<code class="docutils literal notranslate"><span class="pre">Filter</span></code> can be used to provide additional shareable data processing before sending or after receiving from the peer.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Filter</span></code> can be applied before sending the <code class="docutils literal notranslate"><span class="pre">Shareable</span></code> or after receiving the <code class="docutils literal notranslate"><span class="pre">Shareable</span></code>.
+NVFlare defined the former one to be “outbound_filters” and the latter one to be “inbound_filters”.
+Please refer to <a class="reference internal" href="user_guide/application.html#nvflare-application"><span class="std std-ref">NVFlare Application</span></a> for how to write the configuration to include your filters.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">FLContext</span></code> is available for the <code class="docutils literal notranslate"><span class="pre">Filter</span></code> to use.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Filter</span><span class="p">(</span><span class="n">FLComponent</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shareable</span><span class="p">:</span> <span class="n">Shareable</span><span class="p">,</span> <span class="n">fl_ctx</span><span class="p">:</span> <span class="n">FLContext</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Shareable</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            filter process apply to the Shareable object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            shareable: shareable</span>
+<span class="sd">            fl_ctx: FLContext</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            a Shareable object</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="aggregator">
+<h3><a class="toc-backref" href="#id10">Aggregator</a><a class="headerlink" href="#aggregator" title="Permalink to this headline">¶</a></h3>
+<p>Aggregators define the aggregation algorithm to aggregate the <code class="docutils literal notranslate"><span class="pre">Shareable</span></code>.
+For example, a simple aggregator would be just average all the <code class="docutils literal notranslate"><span class="pre">Shareable</span></code> of the same round.</p>
+<p>Below is the signature for an aggregator.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Aggregator</span><span class="p">(</span><span class="n">FLComponent</span><span class="p">):</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">accept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shareable</span><span class="p">:</span> <span class="n">Shareable</span><span class="p">,</span> <span class="n">fl_ctx</span><span class="p">:</span> <span class="n">FLContext</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            accept the shareable submitted by the client.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            shareable: submitted Shareable object</span>
+<span class="sd">            fl_ctx: FLContext</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            first boolean to indicate if the contribution has been accepted.</span>
+<span class="sd">            second boolean to indicate if trigger the current round aggregate() call right away.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">aggregate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fl_ctx</span><span class="p">:</span> <span class="n">FLContext</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Shareable</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            perform the aggregation for all the received Shareable from the clients.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            fl_ctx: FLContext</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            shareable</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="trainer">
+<h3><a class="toc-backref" href="#id11">Trainer</a><a class="headerlink" href="#trainer" title="Permalink to this headline">¶</a></h3>
+<p>You need to implement the <code class="docutils literal notranslate"><span class="pre">train()</span></code> method for your <code class="docutils literal notranslate"><span class="pre">Trainer</span></code>.</p>
+<p>FL client gets the global <code class="docutils literal notranslate"><span class="pre">Shareable</span></code> from the FL server for each round and then the <code class="docutils literal notranslate"><span class="pre">train()</span></code> method will be called.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">train()</span></code> method needs to get the required information from the global <code class="docutils literal notranslate"><span class="pre">Shareable</span></code>,
+use that in its training process, then returning the local training result as a <code class="docutils literal notranslate"><span class="pre">Shareable</span></code>.</p>
+<p>You will need to configure your own <code class="docutils literal notranslate"><span class="pre">Trainer</span></code> in config_fed_client.json.
+Example FL configurations can be found in <a class="reference internal" href="user_guide/application.html#nvflare-application"><span class="std std-ref">NVFlare Application</span></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Trainer</span><span class="p">(</span><span class="n">FLComponent</span><span class="p">):</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shareable</span><span class="p">:</span> <span class="n">Shareable</span><span class="p">,</span> <span class="n">fl_ctx</span><span class="p">:</span> <span class="n">FLContext</span><span class="p">,</span> <span class="n">abort_signal</span><span class="p">:</span> <span class="n">Signal</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Shareable</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            use the Shareable from the server to train the model.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            shareable: shareable from server</span>
+<span class="sd">            fl_ctx: FLContext</span>
+<span class="sd">            abort_signal: signal to indicate abort the training</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Shareable object to be submitted to server for aggregation</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="default-data-in-the-built-in-flcomponents">
+<h2><a class="toc-backref" href="#id12">Default data in the built-in FLComponents</a><a class="headerlink" href="#default-data-in-the-built-in-flcomponents" title="Permalink to this headline">¶</a></h2>
+<p>For the built-in FLComponents provided by NVFlare, we assure the following data is set in the <code class="docutils literal notranslate"><span class="pre">Shareable</span></code> and <code class="docutils literal notranslate"><span class="pre">FLContext</span></code>.</p>
+<p>You can also define the structure of <code class="docutils literal notranslate"><span class="pre">Sharable</span></code> objects that fits your needs and
+add your training associated data into <code class="docutils literal notranslate"><span class="pre">FLContext</span></code>.</p>
+<div class="section" id="data-available-in-the-shareable">
+<h3><a class="toc-backref" href="#id13">Data available in the Shareable</a><a class="headerlink" href="#data-available-in-the-shareable" title="Permalink to this headline">¶</a></h3>
+<p>A pre-defined set of <code class="docutils literal notranslate"><span class="pre">ShareableKey</span></code> and <code class="docutils literal notranslate"><span class="pre">ShareableValue</span></code> is as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ShareableKey</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
 
     <span class="n">TYPE</span> <span class="o">=</span> <span class="s2">&quot;type&quot;</span>
@@ -351,250 +594,7 @@ data, etc. It should hold enough information for the other party to know how to 
     <span class="n">DATA_TYPE_FILES</span> <span class="o">=</span> <span class="s2">&quot;files&quot;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="fl-context">
-<h3><a class="toc-backref" href="#id5">FL Context</a><a class="headerlink" href="#fl-context" title="Permalink to this headline">¶</a></h3>
-<p>FLContext is used to hold the processing data and pass along the data between the FL components. FL components can
-set the data into the <code class="docutils literal notranslate"><span class="pre">FLContext</span></code> and later be retrieved by other components. Each FL component has access to the
-<code class="docutils literal notranslate"><span class="pre">FLContext</span></code> within their method calls.</p>
-<p>The data placed into the FLContext has the property to indicate it’s for private use, or can be shared to its peer
-during the FL communication.  The private property means the data will be only present during its own processing. The
-non private property in the FLContext will also be sent to its peer when communicating with the peer.</p>
-<div class="section" id="api-specification">
-<h4><a class="toc-backref" href="#id6">API Specification</a><a class="headerlink" href="#api-specification" title="Permalink to this headline">¶</a></h4>
-<p>Property Access</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">set_prop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">private</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">get_prop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>With <code class="docutils literal notranslate"><span class="pre">set_prop</span></code>, you can set any object to the context by providing a key and the value of the object.
-The private property indicates the data is used locally or could be shared to the peer.
-When the “sticky” property is set to True, this data in the <code class="docutils literal notranslate"><span class="pre">FLContext</span></code> will be copied over when creating a new <code class="docutils literal notranslate"><span class="pre">FLContext</span></code>.</p>
-<p>There are many predefined <code class="docutils literal notranslate"><span class="pre">FLContextKeys</span></code> used by different <code class="docutils literal notranslate"><span class="pre">FLComponent</span></code> functions.
-Please refer to <code class="docutils literal notranslate"><span class="pre">nvflare.apis.fl_constant</span></code> for details.</p>
-</div>
-</div>
-<div class="section" id="flcomponent">
-<h3><a class="toc-backref" href="#id7">FLComponent</a><a class="headerlink" href="#flcomponent" title="Permalink to this headline">¶</a></h3>
-<p>The definition of the <code class="docutils literal notranslate"><span class="pre">FLComponent</span></code>. This is the root of all the FL components. Each <code class="docutils literal notranslate"><span class="pre">FLComponent</span></code> is automatically
-added as an event handler in the system. It can implement the method to process different types of event types
-accordingly.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">FLComponent</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">handle_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">fl_ctx</span><span class="p">:</span> <span class="n">FLContext</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            perform the handler process based on the event_type.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            event_type:</span>
-<span class="sd">            fl_ctx:</span>
-
-<span class="sd">        Returns:</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="fl-components">
-<h2><a class="toc-backref" href="#id8">FL Components</a><a class="headerlink" href="#fl-components" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="filters">
-<h3><a class="toc-backref" href="#id9">Filters</a><a class="headerlink" href="#filters" title="Permalink to this headline">¶</a></h3>
-<p>There are two kinds of filters defined as inbound_filters and outbound_filters. Filters are used to provide additional
-shareable data processing before sending or after receiving from the peer. “outbound_filters” apply before sending the
-Shareable, and “inbound_filters” apply when receiving the Shareable. While processing the shareable, the FLContext
-is also available.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shareable</span><span class="p">:</span> <span class="n">Shareable</span><span class="p">,</span> <span class="n">fl_ctx</span><span class="p">:</span> <span class="n">FLContext</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Shareable</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        filter process applies to the Shareable object.</span>
-<span class="sd">    Args:</span>
-<span class="sd">        shareable:</span>
-<span class="sd">        fl_ctx: FLContext</span>
-
-<span class="sd">    Returns:</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">pass</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="handlers">
-<h3><a class="toc-backref" href="#id10">Handlers</a><a class="headerlink" href="#handlers" title="Permalink to this headline">¶</a></h3>
-<p>Handlers are used to plug in additional customized actions to the FL workflows. There are many different event types
-that can be plugged in at very different event time points to inject specific functions you want. The API signature
-of handler is</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">handle_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">fl_ctx</span><span class="p">:</span> <span class="n">FLContext</span><span class="p">):</span>
-</pre></div>
-</div>
-<p>All the <code class="docutils literal notranslate"><span class="pre">FLComponent</span></code> can implement <code class="docutils literal notranslate"><span class="pre">handle_event</span></code>. They are automatically treated as handlers.
-You can also implement the handler without making it to be a FL component.</p>
-<div class="section" id="event-types">
-<h4><a class="toc-backref" href="#id11">Event types</a><a class="headerlink" href="#event-types" title="Permalink to this headline">¶</a></h4>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 75%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Event</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>START_RUN</p></td>
-<td><p>Start of the current “run”</p></td>
-</tr>
-<tr class="row-odd"><td><p>END_RUN</p></td>
-<td><p>End of the current “run”</p></td>
-</tr>
-<tr class="row-even"><td><p>START_ROUND</p></td>
-<td><p>Start of the “round”</p></td>
-</tr>
-<tr class="row-odd"><td><p>END_ROUND</p></td>
-<td><p>End of the “round”</p></td>
-</tr>
-<tr class="row-even"><td><p>CLIENT_REGISTER</p></td>
-<td><p>When the client register to the server</p></td>
-</tr>
-<tr class="row-odd"><td><p>GET_MODEL</p></td>
-<td><p>When server get the request to fetch global model</p></td>
-</tr>
-<tr class="row-even"><td><p>CLIENT_QUIT</p></td>
-<td><p>When the client quit from the server.</p></td>
-</tr>
-<tr class="row-odd"><td><p>SEND_MODEL</p></td>
-<td><p>After the client sends the update to the server.</p></td>
-</tr>
-<tr class="row-even"><td><p>RECEIVE_CONTRIBUTION</p></td>
-<td><p>When the server receives the update from the client.</p></td>
-</tr>
-<tr class="row-odd"><td><p>BEFORE_AGGREGATION</p></td>
-<td><p>Before the aggregation call on the server.</p></td>
-</tr>
-<tr class="row-even"><td><p>END_AGGREGATION</p></td>
-<td><p>After the aggregation call on the server.</p></td>
-</tr>
-<tr class="row-odd"><td><p>RECEIVE_MODEL</p></td>
-<td><p>After the client receives the global model from the server.</p></td>
-</tr>
-<tr class="row-even"><td><p>BEFORE_PULL_MODEL</p></td>
-<td><p>Before the client starts to pull the global model from the server.</p></td>
-</tr>
-<tr class="row-odd"><td><p>AFTER_PULL_MODEL</p></td>
-<td><p>After the client pull the global model from the server.</p></td>
-</tr>
-<tr class="row-even"><td><p>BEFORE_TRAIN</p></td>
-<td><p>Before the client trainer starts the local train.</p></td>
-</tr>
-<tr class="row-odd"><td><p>AFTER_TRAIN</p></td>
-<td><p>After the client trainer starts the local train.</p></td>
-</tr>
-<tr class="row-even"><td><p>BEFORE_SEND_MODEL</p></td>
-<td><p>Before the client starts to send the update to the server.</p></td>
-</tr>
-<tr class="row-odd"><td><p>BEFORE_ACCEPT</p></td>
-<td><p>Before the server calls the aggregator accept().</p></td>
-</tr>
-<tr class="row-even"><td><p>AFTER_ACCEPT</p></td>
-<td><p>After  the server calls the aggregator accept().</p></td>
-</tr>
-<tr class="row-odd"><td><p>BEFORE_MODEL_UPDATE</p></td>
-<td><p>Before the aggregator aggregate() call.</p></td>
-</tr>
-<tr class="row-even"><td><p>AFTER_MODEL_UPDATE</p></td>
-<td><p>After the aggregator aggregate() call.</p></td>
-</tr>
-<tr class="row-odd"><td><p>BEFORE_SAVE_MODEL</p></td>
-<td><p>Before the model persistor saves the global model.</p></td>
-</tr>
-<tr class="row-even"><td><p>AFTER_SAVE_MODEL</p></td>
-<td><p>After the model persistor saves the global model.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="section" id="aggregator">
-<h3><a class="toc-backref" href="#id12">Aggregator</a><a class="headerlink" href="#aggregator" title="Permalink to this headline">¶</a></h3>
-<p>This is the signature for an aggregator.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">accept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shareable</span><span class="p">:</span> <span class="n">Shareable</span><span class="p">,</span> <span class="n">fl_ctx</span><span class="p">:</span> <span class="n">FLContext</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        accept the shareable submitted by the client.</span>
-<span class="sd">    Args:</span>
-<span class="sd">        shareable: submitted Shareable object</span>
-<span class="sd">        fl_ctx: FLContext</span>
-
-<span class="sd">   Returns:</span>
-<span class="sd">        first boolean to indicate if the contribution has been accepted.</span>
-<span class="sd">        second boolean to indicate if to trigger the current round aggregate() call right away.</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">pass</span>
-
-<span class="nd">@abstractmethod</span>
-<span class="k">def</span> <span class="nf">aggregate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fl_ctx</span><span class="p">:</span> <span class="n">FLContext</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Shareable</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        perform the aggregation for all the received Shareable from the clients.</span>
-<span class="sd">    Args:</span>
-<span class="sd">        fl_ctx:</span>
-
-<span class="sd">    Returns:</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">pass</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="trainer">
-<h3><a class="toc-backref" href="#id13">Trainer</a><a class="headerlink" href="#trainer" title="Permalink to this headline">¶</a></h3>
-<p>You can implement your own Trainer FLComponent. FL client gets the global <code class="docutils literal notranslate"><span class="pre">Shareable</span></code> from the FL server for each round.
-You can implement the train API method by applying the global <code class="docutils literal notranslate"><span class="pre">Shareable</span></code> into your own training network,
-using your own training data for the local model training, then returning the training result as a <code class="docutils literal notranslate"><span class="pre">Shareable</span></code>.</p>
-<p>You will need to configure your own trainer in config_fed_client.json.
-Example FL configurations can be found in the <a class="reference internal" href="user_guide/configuration.html#config-details"><span class="std std-ref">Configuration details</span></a>.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Trainer</span><span class="p">(</span><span class="n">FLComponent</span><span class="p">):</span>
-    <span class="nd">@abstractmethod</span>
-    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shareable</span><span class="p">:</span> <span class="n">Shareable</span><span class="p">,</span> <span class="n">fl_ctx</span><span class="p">:</span> <span class="n">FLContext</span><span class="p">,</span> <span class="n">abort_signal</span><span class="p">:</span> <span class="n">Signal</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Shareable</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            use the Shareable from the server to train the model.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            shareable: shareable from server</span>
-<span class="sd">            fl_ctx: FLContext</span>
-<span class="sd">            abort_signal: signal to indicate abort the training</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            Shareable object to be submitted to server for aggregation</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="how-to-access-the-data-in-the-standard-flcomponents">
-<h2><a class="toc-backref" href="#id14">How to access the data in the standard FLComponents</a><a class="headerlink" href="#how-to-access-the-data-in-the-standard-flcomponents" title="Permalink to this headline">¶</a></h2>
-<p>For the standard FLComponents implementation in NVFlare the following data is in the <code class="docutils literal notranslate"><span class="pre">Shareable</span></code> and <code class="docutils literal notranslate"><span class="pre">FLContext</span></code>.</p>
-<p>You can also define the structure of <code class="docutils literal notranslate"><span class="pre">Sharable</span></code> objects that fits your needs and
-add your training associated data into the <code class="docutils literal notranslate"><span class="pre">FLContext</span></code>.</p>
-<div class="section" id="data-available-in-the-shareable">
-<h3><a class="toc-backref" href="#id15">Data available in the Shareable</a><a class="headerlink" href="#data-available-in-the-shareable" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">meta_data</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="n">meta_data</span><span class="p">[</span><span class="n">FLConstants</span><span class="o">.</span><span class="n">NUM_TOTAL_STEPS</span><span class="p">]</span> <span class="o">=</span> <span class="n">train_ctx</span><span class="o">.</span><span class="n">total_steps</span>
-<span class="n">meta_data</span><span class="p">[</span><span class="n">FLConstants</span><span class="o">.</span><span class="n">INITIAL_LEARNING_RATE</span><span class="p">]</span> <span class="o">=</span> <span class="n">train_ctx</span><span class="o">.</span><span class="n">initial_learning_rate</span>
-<span class="n">meta_data</span><span class="p">[</span><span class="n">FLConstants</span><span class="o">.</span><span class="n">NUMBER_OF_GPUS</span><span class="p">]</span> <span class="o">=</span> <span class="n">train_ctx</span><span class="o">.</span><span class="n">num_gpus</span>
-<span class="n">meta_data</span><span class="p">[</span><span class="n">FLConstants</span><span class="o">.</span><span class="n">LOCAL_EPOCHS</span><span class="p">]</span> <span class="o">=</span> <span class="n">train_ctx</span><span class="o">.</span><span class="n">total_executed_epochs</span>
-<span class="n">meta_data</span><span class="p">[</span><span class="n">FLConstants</span><span class="o">.</span><span class="n">CURRENT_LEARNING_RATE</span><span class="p">]</span> <span class="o">=</span> <span class="n">train_ctx</span><span class="o">.</span><span class="n">current_learning_rate</span>
-<span class="n">meta_data</span><span class="p">[</span><span class="n">FLConstants</span><span class="o">.</span><span class="n">INITIAL_METRICS</span><span class="p">]</span> <span class="o">=</span> <span class="n">train_ctx</span><span class="o">.</span><span class="n">fl_init_validation_metric</span>
-<span class="n">meta_data</span><span class="p">[</span><span class="n">FLConstants</span><span class="o">.</span><span class="n">NUM_STEPS_CURRENT_ROUND</span><span class="p">]</span> <span class="o">=</span> <span class="n">train_ctx</span><span class="o">.</span><span class="n">current_steps</span>
-<span class="n">meta_data</span><span class="p">[</span><span class="n">FLConstants</span><span class="o">.</span><span class="n">NUM_EPOCHS_CURRENT_ROUND</span><span class="p">]</span> <span class="o">=</span> <span class="n">train_ctx</span><span class="o">.</span><span class="n">current_executed_epochs</span>
-
-<span class="n">shareable</span><span class="p">[</span><span class="n">ShareableKey</span><span class="o">.</span><span class="n">TYPE</span><span class="p">]</span> <span class="o">=</span> <span class="n">ShareableValue</span><span class="o">.</span><span class="n">TYPE_WEIGHT_DIFF</span>
-<span class="n">shareable</span><span class="p">[</span><span class="n">ShareableKey</span><span class="o">.</span><span class="n">DATA_TYPE</span><span class="p">]</span> <span class="o">=</span> <span class="n">ShareableValue</span><span class="o">.</span><span class="n">DATA_TYPE_UNENCRYPTED</span>
-<span class="n">shareable</span><span class="p">[</span><span class="n">ShareableKey</span><span class="o">.</span><span class="n">MODEL_WEIGHTS</span><span class="p">]</span> <span class="o">=</span> <span class="n">local_model_dict</span>
-<span class="n">shareable</span><span class="p">[</span><span class="n">ShareableKey</span><span class="o">.</span><span class="n">META</span><span class="p">]</span> <span class="o">=</span> <span class="n">meta_data</span>
-</pre></div>
-</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">Shareable</span></code> contains the following data:</p>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 33%" />
@@ -603,68 +603,130 @@ add your training associated data into the <code class="docutils literal notrans
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Shareable key</p></th>
-<th class="head"><p>Data</p></th>
+<th class="head"><p>Value</p></th>
 <th class="head"><p>Notes</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>ShareableKey.TYPE</p></td>
-<td><p>TYPE_WEIGHT_DIFF</p></td>
-<td><p>Indicates the shareable type is model weight diff</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">TYPE_WEIGHT</span></code> or <code class="docutils literal notranslate"><span class="pre">TYPE_WEIGHT_DIFF</span></code> or <code class="docutils literal notranslate"><span class="pre">TYPE_NONE</span></code></p></td>
+<td><p>Indicates the shareable type is model weights or model weights difference or anything else</p></td>
 </tr>
 <tr class="row-odd"><td><p>ShareableKey.DATA_TYPE</p></td>
-<td><p>DATA_TYPE_UNENCRYPTED</p></td>
-<td><p>Indicates the shareable data type is un-encrypted</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DATA_TYPE_ENCRYPTED</span></code> or <code class="docutils literal notranslate"><span class="pre">DATA_TYPE_UNENCRYPTED</span></code> or <code class="docutils literal notranslate"><span class="pre">DATA_TYPE_MIXED</span></code></p></td>
+<td><p>Indicates the shareable data type is encrypted or unencrypted or mixed of both</p></td>
 </tr>
 <tr class="row-even"><td><p>ShareableKey.MODEL_WEIGHTS</p></td>
-<td><p>local_model_dict</p></td>
+<td><p>A dictionary of model weights</p></td>
 <td><p>Local trained model weights</p></td>
 </tr>
 <tr class="row-odd"><td><p>ShareableKey.META</p></td>
-<td><p>NUM_TOTAL_STEPS</p></td>
+<td><p>A dictionary of meta data</p></td>
+<td><p>Meta data of the model</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">MODEL_NAME</span></code>, <code class="docutils literal notranslate"><span class="pre">DATA</span></code>, <code class="docutils literal notranslate"><span class="pre">METRICS</span></code> in <code class="docutils literal notranslate"><span class="pre">ShareableKey</span></code> and <code class="docutils literal notranslate"><span class="pre">TYPE_ML_MODEL</span></code>, <code class="docutils literal notranslate"><span class="pre">TYPE_METRICS</span></code>,
+<code class="docutils literal notranslate"><span class="pre">DATA_TYPE_BYTES</span></code>, <code class="docutils literal notranslate"><span class="pre">DATA_TYPE_FILES</span></code> in <code class="docutils literal notranslate"><span class="pre">ShareableValue</span></code> are for cross-site validation, so
+they are not required for training</p>
+</div>
+<p>The meta data dictionary contains the following content:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Key</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>NUM_TOTAL_STEPS</p></td>
 <td><p>Number of total steps since start</p></td>
 </tr>
-<tr class="row-even"><td></td>
-<td><p>INITIAL_LEARNING_RATE</p></td>
+<tr class="row-odd"><td><p>INITIAL_LEARNING_RATE</p></td>
 <td><p>Initial learning rate</p></td>
 </tr>
-<tr class="row-odd"><td></td>
-<td><p>NUMBER_OF_GPUS</p></td>
+<tr class="row-even"><td><p>NUMBER_OF_GPUS</p></td>
 <td><p>Number of GPUs for the training</p></td>
 </tr>
-<tr class="row-even"><td></td>
-<td><p>LOCAL_EPOCHS</p></td>
+<tr class="row-odd"><td><p>LOCAL_EPOCHS</p></td>
 <td><p>Number of epochs for each round</p></td>
 </tr>
-<tr class="row-odd"><td></td>
-<td><p>CURRENT_LEARNING_RATE</p></td>
+<tr class="row-even"><td><p>CURRENT_LEARNING_RATE</p></td>
 <td><p>Current learning rate</p></td>
 </tr>
-<tr class="row-even"><td></td>
-<td><p>INITIAL_METRICS</p></td>
+<tr class="row-odd"><td><p>INITIAL_METRICS</p></td>
 <td><p>Initial validation metrics for the global model</p></td>
 </tr>
-<tr class="row-odd"><td></td>
-<td><p>NUM_STEPS_CURRENT_ROUND</p></td>
+<tr class="row-even"><td><p>NUM_STEPS_CURRENT_ROUND</p></td>
 <td><p>Number of steps executed for the current round</p></td>
 </tr>
-<tr class="row-even"><td></td>
-<td><p>NUM_EPOCHS_CURRENT_ROUND</p></td>
+<tr class="row-odd"><td><p>NUM_EPOCHS_CURRENT_ROUND</p></td>
 <td><p>Number of epochs for the current round</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="section" id="data-available-in-the-shared-flcontext">
-<h3><a class="toc-backref" href="#id16">Data available in the shared FLContext</a><a class="headerlink" href="#data-available-in-the-shared-flcontext" title="Permalink to this headline">¶</a></h3>
-<p>The public <code class="docutils literal notranslate"><span class="pre">FLContext</span></code> data is also sent to the other party along with the <code class="docutils literal notranslate"><span class="pre">Shareable</span></code> object.</p>
+<h3><a class="toc-backref" href="#id14">Data available in the shared FLContext</a><a class="headerlink" href="#data-available-in-the-shared-flcontext" title="Permalink to this headline">¶</a></h3>
+<p>The public <code class="docutils literal notranslate"><span class="pre">FLContext</span></code> data is sent to other parties along with the <code class="docutils literal notranslate"><span class="pre">Shareable</span></code> object.
+It contains the following content:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Key</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>FLConstants.PEER_CONTEXT</p></td>
+<td><p>A dictionary</p></td>
+<td><p>Its peer’s <code class="docutils literal notranslate"><span class="pre">FLContext</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For an FL server, its peer is an FL client.
+For an FL client, its peer is an FL server.</p>
+</div>
+<p>If the role is FL server, the peer context contains the following content:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Key</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>FLConstants.CLIENT_NAME</p></td>
+<td><p>FL client’s name</p></td>
+</tr>
+<tr class="row-odd"><td><p>FLConstants.CURRENT_ROUND</p></td>
+<td><p>current training round</p></td>
+</tr>
+<tr class="row-even"><td><p>FLConstants.NUM_STEPS_CURRENT_ROUND</p></td>
+<td><p>number of steps advanced in the current round</p></td>
+</tr>
+</tbody>
+</table>
 <p>To retrieve the shared <code class="docutils literal notranslate"><span class="pre">FLContext</span></code> data:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">shared_context</span> <span class="o">=</span> <span class="n">fl_ctx</span><span class="o">.</span><span class="n">get_prop</span><span class="p">(</span><span class="n">FLConstants</span><span class="o">.</span><span class="n">PEER_CONTEXT</span><span class="p">)</span>
 <span class="n">client_name</span> <span class="o">=</span> <span class="n">shared_context</span><span class="o">.</span><span class="n">get_prop</span><span class="p">(</span><span class="n">FLConstants</span><span class="o">.</span><span class="n">CLIENT_NAME</span><span class="p">)</span>
 <span class="n">current_round</span> <span class="o">=</span> <span class="n">shared_context</span><span class="o">.</span><span class="n">get_prop</span><span class="p">(</span><span class="n">FLConstants</span><span class="o">.</span><span class="n">CURRENT_ROUND</span><span class="p">)</span>
 <span class="n">number_steps</span> <span class="o">=</span> <span class="n">shared_context</span><span class="o">.</span><span class="n">get_prop</span><span class="p">(</span><span class="n">FLConstants</span><span class="o">.</span><span class="n">NUM_STEPS_CURRENT_ROUND</span><span class="p">)</span>
-
-<span class="n">global_model_vars</span> <span class="o">=</span> <span class="n">shared_context</span><span class="o">.</span><span class="n">get_prop</span><span class="p">(</span><span class="s1">&#39;model_vars&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

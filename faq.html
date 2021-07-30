@@ -71,7 +71,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Hello World Examples" href="examples.html" />
+    <link rel="next" title="nvflare" href="apidocs/modules.html" />
     <link rel="prev" title="Programming Guide" href="programming_guide.html" /> 
 </head>
 
@@ -162,6 +162,8 @@
             
             
               <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="user_guide.html">User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="programming_guide.html">Programming Guide</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">FAQ</a><ul>
@@ -171,8 +173,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#cross-site-validation">Cross Site Validation</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">Hello World Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="apidocs/modules.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
 </ul>
 
             
@@ -256,10 +258,13 @@ and will contribute to the current global model.</p>
 never sends uninvited requests to clients but only responds to client requests.</p>
 </div></blockquote>
 </li>
+</ol>
+<ol class="arabic" id="multi-gpu-training">
 <li><p>Can a client train with multiple GPUs?</p>
 <blockquote>
 <div><p>Yes, the administrator command <code class="docutils literal notranslate"><span class="pre">start_mgpu</span> <span class="pre">client</span> <span class="pre">&lt;gpu</span> <span class="pre">number&gt;</span> <span class="pre">&lt;client</span> <span class="pre">name&gt;</span></code> can be used to start training
-on FL clients with different numbers of GPUs when starting training. It is possible for different clients to be
+on FL clients with different numbers of GPUs when starting training. But you will need to install <code class="docutils literal notranslate"><span class="pre">torch</span></code> for
+PyTorch based Trainer, and <code class="docutils literal notranslate"><span class="pre">mpi4py</span></code> for all other trainers. It is possible for different clients to be
 training with different numbers of GPUs.</p>
 </div></blockquote>
 </li>
@@ -350,18 +355,8 @@ GPUs. To disable GPUs on the server, include the following in the shell script t
 </li>
 <li><p>What port do I need to open from the firewall on the FL server network?</p>
 <blockquote>
-<div><p>Depending on the configuration of config_fed_server.json which controls which port the gRPC is deployed to, the FL server network
-needs to open that port for outside clients to reach the FL server. For example, with the following configurations,
-the AWS instance needs to open 8002 port for TCP traffic to reach the AWS instance:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;service&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="s2">&quot;target&quot;</span><span class="p">:</span> <span class="s2">&quot;ec2-3-81-120-62.compute-1.amazonaws.com:8002&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;options&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">[</span><span class="s2">&quot;grpc.max_send_message_length&quot;</span><span class="p">,</span>    <span class="mi">1000000000</span><span class="p">],</span>
-        <span class="p">[</span><span class="s2">&quot;grpc.max_receive_message_length&quot;</span><span class="p">,</span> <span class="mi">1000000000</span><span class="p">]</span>
-    <span class="p">]</span>
-<span class="p">}</span>
-</pre></div>
-</div>
+<div><p>Depending on the configuration of <a class="reference internal" href="user_guide/provisioning_tool.html#project-yml"><span class="std std-ref">project.yaml</span></a> which controls which port the gRPC is deployed to,
+the FL server network needs to open that port for outside clients to reach the FL server.</p>
 </div></blockquote>
 </li>
 <li><p>What if the federated learning server is behind a load balancer?</p>
@@ -382,15 +377,7 @@ current round meets “num_rounds”.</p>
 </li>
 <li><p>Can I run the FL server on AWS while running the FL client within my institution?</p>
 <blockquote>
-<div><p>Yes, the steps to set up the AWS FL server instance are:</p>
-<ul class="simple">
-<li><p>Set up an AWS instance with a minimum of t2.2xlarge instance type</p></li>
-<li><p>Install NVFlare</p></li>
-<li><p>Set up the ROOT certificate and the server SSL certificate (make sure to use the AWS instance name to create the SSL server certificate, e.g, ec2-3-99-123-456.compute-1.amazonaws.com)</p></li>
-<li><p>Create the client certificate using the ROOT certificate to sign</p></li>
-<li><p>Configure config_fed_server.json and config_fed_client.json properly</p></li>
-<li><p>Start the server and clients</p></li>
-</ul>
+<div><p>Yes, use the AWS instance name as the server cn in project.yml file. (e.g.: ec2-3-99-123-456.compute-1.amazonaws.com)</p>
 </div></blockquote>
 </li>
 <li><p>How can I deploy different applications for different clients?</p>
@@ -428,7 +415,7 @@ value is set too low, the admin command may not reach the client to execute the 
 completes when the admin issues the “shutdown” command or ctrl-C is used to end the process.</p>
 </div></blockquote>
 </li>
-<li><p>Why are my custom BYOC components not updating between runs?</p>
+<li><p>Why if my custom components not updating between runs?</p>
 <blockquote>
 <div><p>If you want to change the code you have already loaded in a custom component, it is recommended that you add a
 version number or change the class name slightly. Python does not load new code definitions with the same class name
@@ -485,7 +472,7 @@ completely abort, call “abort client” command again.</p>
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="examples.html" class="btn btn-neutral float-right" title="Hello World Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="apidocs/modules.html" class="btn btn-neutral float-right" title="nvflare" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="programming_guide.html" class="btn btn-neutral float-left" title="Programming Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
